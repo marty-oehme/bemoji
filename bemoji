@@ -113,8 +113,7 @@ get_most_recent() {
         touch "$recent_file"
     fi
     # TODO improve this messy line
-    cat "$recent_file" |
-        sed -e '/^$/d' |
+    sed -e '/^$/d' "$recent_file" |
         sort |
         uniq -c |
         sort -rn |
