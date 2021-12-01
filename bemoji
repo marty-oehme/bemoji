@@ -23,7 +23,7 @@ bm_ignore_recent=${BEMOJI_IGNORE_RECENT:-false}
 
 # Report usage
 usage() {
-    echo "Usage: $(basename "$0") [-t | -c | -e] [-f <filepath> ] [-p] [-P] [-D all|none|emoji]" 1>&2
+    echo "Usage: $(basename "$0") [-t | -c | -e] [-f <filepath> ] [-p] [-P] [-D <choices>]" 1>&2
     echo
     echo "A simple emoji picker. Runs on bemenu/wofi/rofi/dmenu by default."
     echo "Invoked without arguments sends the picked emoji to the clipboard."
@@ -35,6 +35,7 @@ usage() {
     echo "   -P             Do not order emoji by recently used."
     echo "   -e             Only echo out the picked emoji."
     echo "   -D <choice>    Choose specific default lists to download if none found locally."
+    echo "                  Valid choices: all|none|emoji|math."
     echo
     exit "$1"
 }
