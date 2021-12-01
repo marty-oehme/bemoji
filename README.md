@@ -1,12 +1,14 @@
 # bemoji ❤ - Quickly ⛏ your 🌟
 
+![bemoji picker interface on bemenu](assets/bemenu.png)
+
 Emoji picker with support for bemenu/wofi/rofi/dmenu and wayland/X11.
 
 Will remember your favorite emojis and give you quick access.
 
-![bemoji picker interface on bemenu](assets/bemenu.png)
-
 ## 📁 Installation
+
+![rofi picker interface](assets/rofi.png)
 
 Option 1. Clone the repository and put the executable somewhere in your path:
 
@@ -35,22 +37,20 @@ Dependencies:
 To see how to substitute the default choices with your own tools, 
 see Options below.
 
-![wofi picker interface](assets/wofi.png)
 
 ## 💿 Usage
 
-![bemoji help window](assets/help.png)
+![wofi picker interface](assets/wofi.png)
 
 Simply execute `bemoji` without any options to set up the default emoji database and let you quickly pick an emoji.
 It will be copied to your clipboard for you to paste anywhere.
 If you execute `bemoji -t` it will directly type your emoji directly into whatever application is in focus.
 
 When the emoji list is open you can always press `Alt+1` to send the selected emoji to clipboard and `Alt+2` to type the selected emoji,
-regardless of what the default action is set to.[^always]
+regardless of what the default action is set to.
+(Currently works in bemenu and rofi.)
 
-[^always]: This functionality currently only works in bemenu and rofi.
-
-You can also map the picker to a key combination, e.g. 
+You can also map the picker to a key combination for quick access, e.g. 
 
 In `swaywm`, put the following in `~/.config/sway/config`:
 
@@ -79,9 +79,9 @@ super + Shift + e
 
 And you can easily type any emoji with the help of `Super+Shift+E`.
 
-![rofi picker interface](assets/rofi.png)
-
 ## 🧰 Options
+
+![bemoji help window](assets/help.png)
 
 bemoji comes with a couple of options to specify actions, emoji libraries and directories being used.
 
@@ -225,9 +225,10 @@ BEMOJI_PRIVATE_MODE=false # whether to save new entries
 BEMOJI_IGNORE_RECENT=false # whether to display recent entries
 ```
 
-## Issues
+## 🤗 Issues
 
 Thanks for checking this program out! ❤
 
 If there are any problems, don't hesitate to open an issue.
+
 If you have an idea or improvement, don't hesitate to open a merge request!
