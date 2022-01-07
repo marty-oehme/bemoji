@@ -156,7 +156,7 @@ _typer() {
     elif [ -n "$WAYLAND_DISPLAY" ] && command -v wtype >/dev/null 2>&1; then
         wtype -s 30 "$totype"
     elif [ -n "$DISPLAY" ] && command -v xdotool >/dev/null 2>&1; then
-        xdotool type "$totype" --delay 30
+        xdotool type --delay 30 "$totype"
     else
         printf "No suitable typing tool found."
         exit 1
