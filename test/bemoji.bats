@@ -10,6 +10,7 @@ setup() {
 
     # mock out interactive picker for static emoji return
     export BEMOJI_PICKER_CMD="echo ❤️"
+
     # set up small default set of test emoji for each test
     export BEMOJI_DB_LOCATION="$BATS_TEST_TMPDIR/database"
     export BEMOJI_CACHE_LOCATION="$BATS_TEST_TMPDIR/cache"
@@ -34,5 +35,35 @@ setup() {
     the_version=$(grep 'bm_version=' $(which bemoji))
 
     run bemoji -v
-    assert_output "v${the_version#bm_version=}"
+    assert_output --partial "v${the_version#bm_version=}"
+}
+
+@test "sets XDG directory for db by default" {
+    unset BEMOJI_DB_LOCATION
+    export XDG_DATA_HOME="$BATS_TEST_TMPDIR/xdb-db"
+    run bemoji -v
+    assert_output --regexp "
+database=$BATS_TEST_TMPDIR/xdb-db/bemoji
+"
+}
+
+@test "sets XDG directory for cache by default" {
+    unset BEMOJI_CACHE_LOCATION
+    export XDG_CACHE_HOME="$BATS_TEST_TMPDIR/xdb-cache"
+    run bemoji -v
+    assert_output --regexp "
+history=$BATS_TEST_TMPDIR/xdb-cache/bemoji-history.txt$"
+}
+
+@test "BEMOJI_DB_LOCATION sets correct db directory" {
+    run bemoji -v
+    assert_output --regexp "
+database=$BATS_TEST_TMPDIR/database
+"
+}
+
+@test "BEMOJI_CACHE_LOCATION sets correct cache directory" {
+    run bemoji -v
+    assert_output --regexp "
+history=$BATS_TEST_TMPDIR/cache/bemoji-history.txt$"
 }

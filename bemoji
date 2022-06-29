@@ -33,14 +33,14 @@ usage() {
     echo "   -e             Only echo out the picked emoji."
     echo "   -D <choice>    Choose specific default lists to download if none found locally."
     echo "                  Valid choices: all|none|emoji|math."
-    echo "   -v             Display current program version."
+    echo "   -v             Display current program version and directory configuration."
     echo "   -h             Show this help."
     echo
     exit "$1"
 }
 
 version() {
-    printf "v%s" "$bm_version"
+    printf "v%s\ndatabase=%s\nhistory=%s\n" "$bm_version" "$bm_db_location" "$bm_history_file"
     exit
 }
 
