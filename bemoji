@@ -40,7 +40,7 @@ usage() {
 }
 
 version() {
-    echo "v${bm_version}"
+    printf "v%s" "$bm_version"
     exit
 }
 
