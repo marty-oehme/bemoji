@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
-setup() {
-    load 'test_helper/bats-support/load'
-    load 'test_helper/bats-assert/load'
-
+setup_file() {
     # make bemoji executable from anywhere relative to current testfile
     TEST_DIR="$( cd "$( dirname "$BATS_TEST_FILENAME" )" >/dev/null 2>&1 && pwd )"
     PATH="$TEST_DIR/..:$PATH"
+}
+
+setup() {
+    load 'test_helper/bats-support/load'
+    load 'test_helper/bats-assert/load'
 
     # mock out interactive picker for static emoji return
     export BEMOJI_PICKER_CMD="echo ❤️"
@@ -18,7 +20,7 @@ setup() {
     cat "$BATS_TEST_DIRNAME/resources/test_emoji.txt" > "$BEMOJI_DB_LOCATION/emoji.txt"
 }
 
-@test "test can run script" {
+@test "can run script" {
     export BEMOJI_CLIP_CMD="echo clip test only"
     # closing FD3 manually to prevent hangs, see
     # https://bats-core.readthedocs.io/en/stable/writing-tests.html#file-descriptor-3-read-this-if-bats-hangs
@@ -26,7 +28,7 @@ setup() {
     assert_success
 }
 
-@test "test receives custom picker mock output" {
+@test "can receive custom picker mock output" {
     run bemoji -e 3>&-
     assert_output "❤️"
 }
@@ -47,12 +49,27 @@ database=$BATS_TEST_TMPDIR/xdb-db/bemoji
 "
 }
 
-@test "sets XDG directory for cache by default" {
+@test "sets XDG directory for history by default" {
     unset BEMOJI_CACHE_LOCATION
     export XDG_CACHE_HOME="$BATS_TEST_TMPDIR/xdb-cache"
     run bemoji -v
     assert_output --regexp "
 history=$BATS_TEST_TMPDIR/xdb-cache/bemoji-history.txt$"
+}
+
+@test "falls back to default db directory if no XDG found" {
+    unset BEMOJI_DB_LOCATION
+    run bemoji -v
+    assert_output --regexp "
+database=$HOME/.local/share/bemoji
+"
+}
+
+@test "falls back to default history location if no XDG found" {
+    unset BEMOJI_CACHE_LOCATION
+    run bemoji -v
+    assert_output --regexp "
+history=$HOME/.cache/bemoji-history.txt$"
 }
 
 @test "BEMOJI_DB_LOCATION sets correct db directory" {
