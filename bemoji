@@ -199,7 +199,7 @@ _clipResult() {
 result=$(gather_emojis | _picker)
 exit_value="$?"
 [ "$bm_private_mode" = true ] || add_to_recent "$result"
-result=$(echo "$result" | grep -oP '^[^\s]+' | tr -d '\n')
+result=$(echo "$result" | grep -o '^\S\+' | tr -d '\n')
 
 case "$exit_value" in
 1)

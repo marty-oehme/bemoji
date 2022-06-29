@@ -18,6 +18,7 @@ setup() {
 }
 
 @test "test can run script" {
+    export BEMOJI_CLIP_CMD="echo clip test only"
     # closing FD3 manually to prevent hangs, see
     # https://bats-core.readthedocs.io/en/stable/writing-tests.html#file-descriptor-3-read-this-if-bats-hangs
     run bemoji 3>&-
