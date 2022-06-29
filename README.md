@@ -1,4 +1,4 @@
-# bemoji ❤ - Quickly ⛏ your 🌟
+# bemoji ❤️ - Quickly ⛏️ your 🌟
 
 ![bemoji picker interface on bemenu](assets/bemenu.png)
 
@@ -8,7 +8,19 @@ Will remember your favorite emojis and give you quick access.
 
 ## 📁 Installation
 
+### Dependencies
+
+* One of `bemenu`, `wofi`, `rofi`, `dmenu`, or supplying your own picker.
+* One of `wl-copy`, `xclip`, `xsel` or supplying your own clipboard tool.
+* One of `wtype`, `xdotool` or supplying your own typing tool.
+* `sed`, `grep`, `cut`, `sort`, `uniq`, `tr`, `curl` if using the download functionality.
+
+To see how to substitute the default choices with your own tools,
+see Options below.
+
 ![rofi picker interface](assets/rofi.png)
+
+### Manual
 
 Option 1. Clone the repository and put the executable somewhere in your path:
 
@@ -27,16 +39,13 @@ chmod +x bemoji/bemoji
 ln -s bemoji/bemoji /usr/local/bin/bemoji
 ```
 
-Dependencies:
+### Arch Linux
 
-* One of `bemenu`, `wofi`, `rofi`, `dmenu`, or supplying your own picker.
-* One of `wl-copy`, `xclip`, `xsel` or supplying your own clipboard tool.
-* One of `wtype`, `xdotool` or supplying your own typing tool.
-* `sed`, `grep`, `cut`, `sort`, `uniq`, `tr`, `curl` if using the download functionality.
+On Arch Linux, bemoji has been packaged for the [AUR](https://aur.archlinux.org/packages/bemoji-git) so it can be installed manually from here or easily with your preferred AUR helper, e.g.:
 
-To see how to substitute the default choices with your own tools, 
-see Options below.
-
+```bash
+paru -S bemoji-git
+```
 
 ## 💿 Usage
 
@@ -50,7 +59,7 @@ When the emoji list is open you can always press `Alt+1` to send the selected em
 regardless of what the default action is set to.
 (Currently works in bemenu and rofi.)
 
-You can also map the picker to a key combination for quick access, e.g. 
+You can also map the picker to a key combination for quick access, e.g.
 
 In `swaywm`, put the following in `~/.config/sway/config`:
 
@@ -88,7 +97,7 @@ bemoji comes with a couple of options to specify actions, emoji libraries and di
 ### Adding your own emoji
 
 Simply put your own emoji list into the bemoji data directory.
-By default, the directory will be at your `$XDG_DATA_HOME/bemoji` location - 
+By default, the directory will be at your `$XDG_DATA_HOME/bemoji` location -
 most likely this is `~/.local/share/bemoji`.
 
 Add any number of `.txt` files containing additional emoji to this directory:
@@ -118,7 +127,7 @@ You can also stop bemoji from adding any emoji to your history in the first plac
 bemoji -p
 ```
 
-This will not add any of the emoji you pick to your recent emojis. 
+This will not add any of the emoji you pick to your recent emojis.
 Put both together to completely ignore the recent emoji feature of the program:
 
 ```bash
@@ -128,12 +137,12 @@ bemoji -Pp
 Like this, you'll be hiding any recent personal emoji and no one will know that you always type 👄🍆💦.
 
 The recent list will also contain emoji that are *not* usually on your lists,
-so kept in single-use lists for example. 
+so kept in single-use lists for example.
 If you don't wish those to show up, make use of these options.
 
 ### Setting custom directories
 
-By default bemoji stores your recent history in `$XDG_CACHE_HOME/bemoji-history.txt`, 
+By default bemoji stores your recent history in `$XDG_CACHE_HOME/bemoji-history.txt`,
 so most often in `~/.cache/bemoji-history.txt`
 
 You can overwrite the directories bemoji uses for its emoji lists and history files with the following two environment variables:
@@ -153,8 +162,8 @@ A custom emoji list can be supplied as commandline argument `-f` or `BEMOJI_CUST
 bemoji -f path/to/my/list.txt
 ```
 
-The list will override the normally presented emoji, 
-so that only the custom list and recent emoji will be displayed. 
+The list will override the normally presented emoji,
+so that only the custom list and recent emoji will be displayed.
 To display *only* the emoji list passed in, pass an extra `-P` flag to bemoji.
 
 The path can also be a weblink which bemoji will download and use:
@@ -173,10 +182,10 @@ To change this setting, execute bemoji like the following:
 bemoji -D all
 ```
 
-This will download *all* default sets bemoji knows - which is currently the default emoji list and a long list of math symbols. 
+This will download *all* default sets bemoji knows - which is currently the default emoji list and a long list of math symbols.
 Other valid options for this setting are `emoji`, `math`, `none`.
 
-If set to `none` and no files are in the emoji directory, 
+If set to `none` and no files are in the emoji directory,
 bemoji will simply complain and not show anything.
 
 ### Using a custom tool for picking, clipping, typing
@@ -204,12 +213,12 @@ bemoji -e | cat <(echo -n "https://emojipedia.org/") - | xargs xdg-open
 
 This snippet will open a wiki page for the picked emoji in your browser.
 
-Of course, there are many more possibilities. 
+Of course, there are many more possibilities.
 This is just an example to show how the echo mode works.
 
 ### A list of all environment variables
 
-What follows is a list of all environment variables bemoji understands, 
+What follows is a list of all environment variables bemoji understands,
 with their default settings
 
 ```bash
