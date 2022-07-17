@@ -28,6 +28,7 @@ usage() {
     echo "   -f <filepath>  Use a custom emoji database. Can be a url which will be retrieved."
     echo "   -t             Simulate typing the emoji choice with the keyboard."
     echo "   -c             Send emoji choice to the clipboard. (default)"
+    echo "   -b             Simulate typing and sending emoji to clipboard."
     echo "   -p             Do not save picked emoji to recent history."
     echo "   -P             Do not order emoji by recently used."
     echo "   -e             Only echo out the picked emoji."
@@ -45,11 +46,12 @@ version() {
 }
 
 # Get Options
-while getopts ":f:D:tcepPhv" o; do
+while getopts ":f:D:tcbepPhv" o; do
     case "${o}" in
     f) BEMOJI_CUSTOM_LIST="${OPTARG}" ;;
     t) bm_default_cmd=_typeResult ;;
     c) bm_default_cmd=_clipResult ;;
+    b) bm_default_cmd=_typeClipResult ;;
     e) bm_default_cmd=_echo ;;
     D) BEMOJI_DOWNLOAD_LIST="${OPTARG}" ;;
     p) bm_private_mode=true ;;
@@ -186,6 +188,24 @@ _picker() {
     fi
 }
 
+# Set default typing uti
+_typeClipper() {
+    totype=$(cat -)
+    if [ -n "$BEMOJI_TYPE_CMD" ]; then
+        # shellcheck disable=SC2068
+        ${BEMOJI_TYPE_CMD[@]}
+    elif [ -n "$WAYLAND_DISPLAY" ] && command -v wtype >/dev/null 2>&1; then
+        wtype -s 30 "$totype"
+    elif [ -n "$DISPLAY" ] && command -v xdotool >/dev/null 2>&1; then
+        xdotool type --delay 30 "$totype"
+    else
+        printf "No suitable typing tool found."
+        exit 1
+    fi
+    echo $1
+    echo "$totype" | _clipper
+}
+
 # Type result using xdotool
 _typeResult() {
     cat - | _typer
@@ -193,6 +213,10 @@ _typeResult() {
 
 _clipResult() {
     cat - | _clipper
+}
+
+_typeClipResult() {
+    cat - | _typeClipper
 }
 
 [ -n "$BEMOJI_CUSTOM_LIST" ] || prepare_db
