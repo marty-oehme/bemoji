@@ -10,6 +10,9 @@ bm_db_location=${BEMOJI_DB_LOCATION:-"${XDG_DATA_HOME:-$HOME/.local/share}/bemoj
 bm_cache_dir="${BEMOJI_CACHE_LOCATION:-${XDG_CACHE_HOME:-$HOME/.cache}}"
 bm_history_file="${bm_cache_dir}/bemoji-history.txt"
 
+# Command to run after user chooses an emoji
+bm_default_cmd="$BEMOJI_DEFAULT_CMD"
+
 # Do not save choices
 bm_private_mode=${BEMOJI_PRIVATE_MODE:-false}
 # Do not sort results
@@ -45,9 +48,9 @@ version() {
 while getopts ":f:D:tcepPhv" o; do
     case "${o}" in
     f) BEMOJI_CUSTOM_LIST="${OPTARG}" ;;
-    t) bm_default_cmd+=(_typeResult) ;;
-    c) bm_default_cmd+=(_clipResult) ;;
-    e) bm_default_cmd+=(_echoResult) ;;
+    t) bm_cmds+=(_typer) ;;
+    c) bm_cmds+=(_clipper) ;;
+    e) bm_cmds+=(cat) ;;
     D) BEMOJI_DOWNLOAD_LIST="${OPTARG}" ;;
     p) bm_private_mode=true ;;
     P) bm_ignore_recent=true ;;
@@ -183,19 +186,6 @@ _picker() {
     fi
 }
 
-# Type result using xdotool
-_typeResult() {
-    cat - | _typer
-}
-
-_clipResult() {
-    cat - | _clipper
-}
-
-_echoResult() {
-    cat -
-}
-
 [ -n "$BEMOJI_CUSTOM_LIST" ] || prepare_db
 result=$(gather_emojis | _picker)
 exit_value="$?"
@@ -207,23 +197,23 @@ case "$exit_value" in
     exit
     ;;
 0)
-    if [ ${#bm_default_cmd[@]} -eq 0 ]; then
-        if [ -n "$BEMOJI_DEFAULT_CMD" ]; then
+    if [ ${#bm_cmds[@]} -eq 0 ]; then
+        if [ -n "$bm_default_cmd" ]; then
             # shellcheck disable=SC2068
-            echo "$result" | ${BEMOJI_DEFAULT_CMD[@]}
+            echo "$result" | ${bm_default_cmd[@]}
             exit
         fi
-        bm_default_cmd+=(_clipResult)
+        bm_cmds+=(_clipper)
     fi
-    for cmd in "${bm_default_cmd[@]}"; do
+    for cmd in "${bm_cmds[@]}"; do
         echo "$result" | "$cmd"
     done
     ;;
 10)
-    echo "$result" | _clipResult
+    echo "$result" | _clipper
     ;;
 11)
-    echo "$result" | _typeResult
+    echo "$result" | _typer
     ;;
 esac
 exit
