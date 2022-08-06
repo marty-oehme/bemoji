@@ -46,3 +46,20 @@ setup() {
     BEMOJI_TYPE_CMD="echo typing result" run bemoji -t 3>&-
     assert_output "typing result"
 }
+
+@test "Runs typing and clipping on -ct options" {
+    BEMOJI_CLIP_CMD="echo clipping result" BEMOJI_TYPE_CMD="echo typing result" run bemoji -ct 3>&-
+    assert_output \
+"clipping result
+typing result"
+}
+
+@test "Runs custom default command" {
+    BEMOJI_DEFAULT_CMD="echo my custom command" run bemoji 3>&-
+    assert_output "my custom command"
+}
+
+@test "Using command option overrides custom default command" {
+    BEMOJI_DEFAULT_CMD="echo my custom command" BEMOJI_CLIP_CMD="echo my clipping" run bemoji -c 3>&-
+    assert_output "my clipping"
+}
