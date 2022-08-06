@@ -28,18 +28,6 @@ setup() {
     assert_success
 }
 
-@test "can receive custom picker mock output" {
-    run bemoji -e 3>&-
-    assert_output "❤️"
-}
-
-@test "-v prints correct version number" {
-    the_version=$(grep 'bm_version=' $(which bemoji))
-
-    run bemoji -v
-    assert_output --partial "v${the_version#bm_version=}"
-}
-
 @test "sets XDG directory for db by default" {
     unset BEMOJI_DB_LOCATION
     export XDG_DATA_HOME="$BATS_TEST_TMPDIR/xdb-db"
