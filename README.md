@@ -1,5 +1,7 @@
 # bemoji ❤️ - Quickly ⛏️ your 🌟
 
+[![status-badge](https://ci.martyoeh.me/api/badges/Marty/bemoji/status.svg)](https://ci.martyoeh.me/Marty/bemoji)
+
 ![bemoji picker interface on bemenu](assets/bemenu.png)
 
 Emoji picker with support for bemenu/wofi/rofi/dmenu and wayland/X11.
