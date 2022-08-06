@@ -9,13 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ### Added -->
 
-<!-- ### Changed -->
+### Changed
+
+- Multiple command options can be combined
 
 <!-- ### Deprecated -->
 
 <!-- ### Removed -->
 
-<!-- ### Fixed -->
+### Fixed
+
+- Custom default command is only executed when no command option given
 
 <!-- ### Security -->
 
