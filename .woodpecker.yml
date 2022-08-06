@@ -1,0 +1,5 @@
+pipeline:
+  test:
+    image: bats/bats
+    commands:
+      - /opt/bats/bin/bats test
