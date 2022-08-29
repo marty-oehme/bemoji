@@ -13,6 +13,8 @@ bm_history_file="${bm_cache_dir}/bemoji-history.txt"
 # Command to run after user chooses an emoji
 bm_default_cmd="$BEMOJI_DEFAULT_CMD"
 
+# Newline after echo
+bm_echo_newline=${BEMOJI_ECHO_NEWLINE:-true}
 # Do not save choices
 bm_private_mode=${BEMOJI_PRIVATE_MODE:-false}
 # Do not sort results
@@ -31,6 +33,7 @@ usage() {
     echo "   -e             Only echo out the picked emoji."
     echo ""
     echo " Other options:"
+    echo "   -n             No newline after the picked emoji."
     echo "   -p             Do not save picked emoji to recent history."
     echo "   -P             Do not order emoji by recently used."
     echo "   -D <choice>    Choose specific default lists to download if none found locally."
@@ -48,12 +51,13 @@ version() {
 }
 
 # Get Options
-while getopts ":f:D:tcepPhv" o; do
+while getopts ":f:D:tcenpPhv" o; do
     case "${o}" in
     f) BEMOJI_CUSTOM_LIST="${OPTARG}" ;;
     t) bm_cmds+=(_typer) ;;
     c) bm_cmds+=(_clipper) ;;
     e) bm_cmds+=(cat) ;;
+    n) bm_echo_newline=false;;
     D) BEMOJI_DOWNLOAD_LIST="${OPTARG}" ;;
     p) bm_private_mode=true ;;
     P) bm_ignore_recent=true ;;
@@ -209,7 +213,8 @@ case "$exit_value" in
         bm_cmds+=(_clipper)
     fi
     for cmd in "${bm_cmds[@]}"; do
-        echo "$result" | "$cmd"
+        [ "$bm_echo_newline" = true ] && echo_opts= || echo_opts=-n
+        echo $echo_opts "$result" | "$cmd"
     done
     ;;
 10)
