@@ -33,7 +33,7 @@ usage() {
     echo "   -e             Only echo out the picked emoji."
     echo ""
     echo " Other options:"
-    echo "   -n             No newline after the picked emoji."
+    echo "   -n             Do not print a newline after the picked emoji."
     echo "   -p             Do not save picked emoji to recent history."
     echo "   -P             Do not order emoji by recently used."
     echo "   -D <choice>    Choose specific default lists to download if none found locally."
