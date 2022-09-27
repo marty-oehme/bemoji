@@ -170,7 +170,7 @@ To display *only* the emoji list passed in, pass an extra `-P` flag to bemoji.
 
 The path can also be a weblink which bemoji will download and use:
 
-```
+```bash
 bemoji -f "https://raw.githubusercontent.com/jchook/emoji-menu/master/data/emojis.txt"
 ```
 
@@ -189,6 +189,22 @@ Other valid options for this setting are `emoji`, `math`, `none`.
 
 If set to `none` and no files are in the emoji directory,
 bemoji will simply complain and not show anything.
+
+### Do not skip to new line after output
+
+By default, bemoji will craft the final output using a typical `echo` call for anything it prints directly.
+
+That means, it will also contain a final newline character.
+So, for example it would technically output `🦊\n` for the `fox` emoji,
+which skips to a new line in most circumstances.
+
+If you wish to prevent this character in the final output, use:
+
+```bash
+bemoji -n
+```
+
+Using this option will suppress the newline character and *only* print `🦊` as its output.
 
 ### Using a custom tool for picking, clipping, typing
 
@@ -234,6 +250,7 @@ BEMOJI_CLIP_CMD=wl-copy # which clipboard tool to use
 BEMOJI_TYPE_CMD=wtype # which typing tool to use (ydotool will NOT work)
 BEMOJI_PRIVATE_MODE=false # whether to save new entries
 BEMOJI_IGNORE_RECENT=false # whether to display recent entries
+BEMOJI_ECHO_NEWLINE=true # whether to end the output with a newline character
 ```
 
 ## 🤗 Issues
