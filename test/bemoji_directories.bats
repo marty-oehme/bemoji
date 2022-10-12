@@ -39,7 +39,7 @@ database=$BATS_TEST_TMPDIR/xdb-db/bemoji
 
 @test "sets XDG directory for history by default" {
     unset BEMOJI_CACHE_LOCATION
-    export XDG_CACHE_HOME="$BATS_TEST_TMPDIR/xdb-cache"
+    export XDG_STATE_HOME="$BATS_TEST_TMPDIR/xdb-cache"
     run bemoji -v
     assert_output --regexp "
 history=$BATS_TEST_TMPDIR/xdb-cache/bemoji-history.txt$"
@@ -57,7 +57,7 @@ database=$HOME/.local/share/bemoji
     unset BEMOJI_CACHE_LOCATION
     run bemoji -v
     assert_output --regexp "
-history=$HOME/.cache/bemoji-history.txt$"
+history=$HOME/.local/state/bemoji-history.txt$"
 }
 
 @test "BEMOJI_DB_LOCATION sets correct db directory" {

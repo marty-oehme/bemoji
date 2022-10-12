@@ -7,8 +7,8 @@ bm_db_location=${BEMOJI_DB_LOCATION:-"${XDG_DATA_HOME:-$HOME/.local/share}/bemoj
 # BEMOJI_CUSTOM_LIST=/my/location/emojis.txt
 # Setting custom recent emoji cache:
 # BEMOJI_CACHE_LOCATION=/path/to/my/recents/directory
-bm_cache_dir="${BEMOJI_CACHE_LOCATION:-${XDG_CACHE_HOME:-$HOME/.cache}}"
-bm_history_file="${bm_cache_dir}/bemoji-history.txt"
+bm_state_dir="${BEMOJI_CACHE_LOCATION:-${XDG_STATE_HOME:-$HOME/.local/state}}"
+bm_history_file="${bm_state_dir}/bemoji-history.txt"
 
 # Command to run after user chooses an emoji
 bm_default_cmd="$BEMOJI_DEFAULT_CMD"
@@ -135,8 +135,8 @@ get_most_recent() {
 
 add_to_recent() {
     if [ -z "$1" ]; then return; fi
-    if [ ! -d "$bm_cache_dir" ]; then
-        mkdir -p "$bm_cache_dir"
+    if [ ! -d "$bm_state_dir" ]; then
+        mkdir -p "$bm_state_dir"
     fi
     echo "$1" >>"$bm_history_file"
 }
