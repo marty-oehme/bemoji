@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Custom default command is only executed when no command option given
+- Results are matched case insensitively when using rofi picker to match other pickers
 
 <!-- ### Security -->
 
