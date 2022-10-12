@@ -144,14 +144,14 @@ If you don't wish those to show up, make use of these options.
 
 ### Setting custom directories
 
-By default bemoji stores your recent history in `$XDG_CACHE_HOME/bemoji-history.txt`,
-so most often in `~/.cache/bemoji-history.txt`
+By default bemoji stores your recent history in `$XDG_STATE_HOME/bemoji-history.txt`,
+so most often in `~/.local/state/bemoji-history.txt`
 
 You can overwrite the directories bemoji uses for its emoji lists and history files with the following two environment variables:
 
 ```
 BEMOJI_DB_LOCATION=/path/to/my/emoji/directory
-BEMOJI_CACHE_LOCATION=/path/to/my/cache/directory
+BEMOJI_CACHE_LOCATION=/path/to/my/state/directory
 ```
 
 There are no equivalent commandline arguments to overwrite these two settings.
@@ -241,7 +241,7 @@ with their default settings
 
 ```bash
 BEMOJI_DB_LOCATION=$XDG_DATA_HOME/bemoji # where the emoji lists reside
-BEMOJI_CACHE_LOCATION=$XDG_CACHE_HOME # where the cache file resides
+BEMOJI_CACHE_LOCATION=$XDG_STATE_HOME # where the state file resides
 BEMOJI_CUSTOM_LIST="" # the custom emoji list to display
 BEMOJI_DOWNLOAD_LIST="" # the default emoji lists to download to database
 BEMOJI_DEFAULT_COMMAND=<clip-tool> # which command to invoke by default
