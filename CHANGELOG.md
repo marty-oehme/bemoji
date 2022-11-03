@@ -9,7 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ### Added -->
 
-<!-- ### Changed -->
+### Changed
+
+- (!) History uses `XDG_STATE_HOME` directory by default:
+  This constitutes a break in behavior if you relied a lot on your pick history in the default
+  location. To retain your old history file, simply move it from the old cache directory
+  (`~/.cache/bemoji-history.txt` by default) to the new one (`~/.local/state/bemoji-history.txt`
+  by default).
+- (!) `XDG_CACHE_LOCATION` renamed to `XDG_HISTORY_LOCATION` to better signify its purpose
 
 <!-- ### Deprecated -->
 
