@@ -5,9 +5,9 @@ bm_version=0.2.0
 bm_db_location=${BEMOJI_DB_LOCATION:-"${XDG_DATA_HOME:-$HOME/.local/share}/bemoji"}
 # Setting custom emoji list file location:
 # BEMOJI_CUSTOM_LIST=/my/location/emojis.txt
-# Setting custom recent emoji cache:
-# BEMOJI_CACHE_LOCATION=/path/to/my/recents/directory
-bm_state_dir="${BEMOJI_CACHE_LOCATION:-${XDG_STATE_HOME:-$HOME/.local/state}}"
+# Setting custom recent emoji history:
+# BEMOJI_HISTORY_LOCATION=/path/to/my/recents/directory
+bm_state_dir="${BEMOJI_HISTORY_LOCATION:-${XDG_STATE_HOME:-$HOME/.local/state}}"
 bm_history_file="${bm_state_dir}/bemoji-history.txt"
 
 # Command to run after user chooses an emoji
@@ -57,7 +57,7 @@ while getopts ":f:D:tcenpPhv" o; do
     t) bm_cmds+=(_typer) ;;
     c) bm_cmds+=(_clipper) ;;
     e) bm_cmds+=(cat) ;;
-    n) bm_echo_newline=false;;
+    n) bm_echo_newline=false ;;
     D) BEMOJI_DOWNLOAD_LIST="${OPTARG}" ;;
     p) bm_private_mode=true ;;
     P) bm_ignore_recent=true ;;

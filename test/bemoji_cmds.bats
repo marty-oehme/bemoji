@@ -15,8 +15,8 @@ setup() {
 
     # set up small default set of test emoji for each test
     export BEMOJI_DB_LOCATION="$BATS_TEST_TMPDIR/database"
-    export BEMOJI_CACHE_LOCATION="$BATS_TEST_TMPDIR/cache"
-    mkdir -p "$BEMOJI_DB_LOCATION" "$BEMOJI_CACHE_LOCATION"
+    export BEMOJI_HISTORY_LOCATION="$BATS_TEST_TMPDIR/history"
+    mkdir -p "$BEMOJI_DB_LOCATION" "$BEMOJI_HISTORY_LOCATION"
     cat "$BATS_TEST_DIRNAME/resources/test_emoji.txt" > "$BEMOJI_DB_LOCATION/emoji.txt"
 }
 

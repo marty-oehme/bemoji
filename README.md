@@ -151,7 +151,7 @@ You can overwrite the directories bemoji uses for its emoji lists and history fi
 
 ```
 BEMOJI_DB_LOCATION=/path/to/my/emoji/directory
-BEMOJI_CACHE_LOCATION=/path/to/my/state/directory
+BEMOJI_HISTORY_LOCATION=/path/to/my/state/directory
 ```
 
 There are no equivalent commandline arguments to overwrite these two settings.
@@ -241,7 +241,7 @@ with their default settings
 
 ```bash
 BEMOJI_DB_LOCATION=$XDG_DATA_HOME/bemoji # where the emoji lists reside
-BEMOJI_CACHE_LOCATION=$XDG_STATE_HOME # where the state file resides
+BEMOJI_HISTORY_LOCATION=$XDG_STATE_HOME # where the state file resides
 BEMOJI_CUSTOM_LIST="" # the custom emoji list to display
 BEMOJI_DOWNLOAD_LIST="" # the default emoji lists to download to database
 BEMOJI_DEFAULT_COMMAND=<clip-tool> # which command to invoke by default
