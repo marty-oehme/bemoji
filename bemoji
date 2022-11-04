@@ -36,8 +36,8 @@ usage() {
     echo "   -n             Do not print a newline after the picked emoji."
     echo "   -p             Do not save picked emoji to recent history."
     echo "   -P             Do not order emoji by recently used."
-    echo "   -D <choice>    Choose specific default lists to download if none found locally."
-    echo "                  Valid choices: all|none|emoji|math."
+    echo "   -D <choice>    Choose from default lists to download."
+    echo "                  Valid choices: all|none|emoji|math (multiple choices possible)."
     echo "   -f <filepath>  Use a custom emoji database. Can be a url which will be retrieved."
     echo "   -v             Display current program version and directory configuration."
     echo "   -h             Show this help."
@@ -73,34 +73,39 @@ prepare_db() {
         mkdir -p "$bm_db_location"
     fi
 
-    if [ -n "$(find "$bm_db_location" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then
+    if [ -n "$BEMOJI_DOWNLOAD_LIST" ]; then
         # Populate default lists
         if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'none'; then
-            printf "No emoji list found, but set to not download any default lists."
-            exit 1
+            printf "Not downloading a default emoji list.\n"
+            return
         elif echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'all'; then
             dl_default_emoji
             dl_math_symbols
             return
+        else
+            if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'emoji'; then
+                dl_default_emoji
+            fi
+            if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'math'; then
+                dl_math_symbols
+            fi
         fi
-        if [ -z "$BEMOJI_DOWNLOAD_LIST" ] || echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'emoji'; then
-            dl_default_emoji
-        fi
-        if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'math'; then
-            dl_math_symbols
-        fi
+    fi
+    if [ -n "$(find "$bm_db_location" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then
+        dl_default_emoji
     fi
 }
 
 dl_default_emoji() {
-    curl -sSL "https://unicode.org/Public/emoji/14.0/emoji-test.txt" |
-        sed -ne 's/^.*; fully-qualified.*# \(\S*\) \S* \(.*$\)/\1 \2/gp' >"$bm_db_location/emojis.txt"
-    printf "Downloaded default emoji set."
+    local emojis
+    emojis=$(curl -sSL "https://unicode.org/Public/emoji/14.0/emoji-test.txt")
+    printf "%s" "$emojis" | sed -ne 's/^.*; fully-qualified.*# \(\S*\) \S* \(.*$\)/\1 \2/gp' >"$bm_db_location/emojis.txt"
+    printf "Downloaded default emoji set.\n"
 }
 dl_math_symbols() {
     curl -sSL "https://unicode.org/Public/math/latest/MathClassEx-15.txt" |
-        grep -ve '^#' | cut -d';' -f3,7 --output-delimiter=' ' >"$bm_db_location/math.txt"
-    printf "Downloaded math symbols set."
+        grep -ve '^#' | cut -d';' -f3,7 | sed -e 's/;/ /' >"$bm_db_location/math.txt"
+    printf "Downloaded math symbols set.\n"
 }
 
 gather_emojis() {

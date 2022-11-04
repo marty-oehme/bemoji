@@ -174,11 +174,11 @@ The path can also be a weblink which bemoji will download and use:
 bemoji -f "https://raw.githubusercontent.com/jchook/emoji-menu/master/data/emojis.txt"
 ```
 
-### Change the default emoji set
+### Download additional emoji set
 
-bemoji downloads emoji for you to use on first invocation.
+bemoji automatically downloads an emoji list for you to use on first invocation.
 By default, it only downloads emoji, though you can have it download math symbols as well.
-To change this setting, execute bemoji like the following:
+To download additional sets, execute bemoji like the following:
 
 ```bash
 bemoji -D all
@@ -187,8 +187,14 @@ bemoji -D all
 This will download *all* default sets bemoji knows - which is currently the default emoji list and a long list of math symbols.
 Other valid options for this setting are `emoji`, `math`, `none`.
 
+```bash
+bemoji -D "math emoji"
+```
+
+The above command is equivalent as you can mention multiple sets you want downloaded.
+
 If set to `none` and no files are in the emoji directory,
-bemoji will simply complain and not show anything.
+bemoji will complain and not show anything.
 
 ### Do not skip to new line after output
 

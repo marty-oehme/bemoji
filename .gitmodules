@@ -7,3 +7,6 @@
 [submodule "test/test_helper/bats-assert"]
 	path = test/test_helper/bats-assert
 	url = https://github.com/bats-core/bats-assert.git
+[submodule "test/test_helper/mocks"]
+	path = test/test_helper/mocks
+	url = https://github.com/jasonkarns/bats-mock.git

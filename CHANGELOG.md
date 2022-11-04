@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Multiple command options can be combined
+- Allow downloading emoji sets at any time after initial run with `-D <choice>`
 
 <!-- ### Deprecated -->
 
