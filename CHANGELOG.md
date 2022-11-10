@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+<!-- ### Added -->
+
+<!-- ### Changed -->
+
+<!-- ### Deprecated -->
+
+<!-- ### Removed -->
+
+<!-- ### Fixed -->
+
+<!-- ### Security -->
+
+## [0.3.0] - 2022-11-10
+
 ### Added
 
 - Add new option `-n` which suppresses printing the final newline character in output
@@ -16,16 +30,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Multiple command options can be combined
 - Allow downloading emoji sets at any time after initial run with `-D <choice>`
 
-<!-- ### Deprecated -->
-
-<!-- ### Removed -->
-
 ### Fixed
 
 - Custom default command is only executed when no command option given
 - Results are matched case insensitively when using rofi picker to match other pickers
-
-<!-- ### Security -->
 
 ## [0.2.0] - 2022-06-29
 

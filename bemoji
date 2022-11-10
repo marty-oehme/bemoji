@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-bm_version=0.2.0
+bm_version=0.3.0
 # Emoji default database location
 bm_db_location=${BEMOJI_DB_LOCATION:-"${XDG_DATA_HOME:-$HOME/.local/share}/bemoji"}
 # Setting custom emoji list file location:
@@ -57,7 +57,7 @@ while getopts ":f:D:tcenpPhv" o; do
     t) bm_cmds+=(_typer) ;;
     c) bm_cmds+=(_clipper) ;;
     e) bm_cmds+=(cat) ;;
-    n) bm_echo_newline=false;;
+    n) bm_echo_newline=false ;;
     D) BEMOJI_DOWNLOAD_LIST="${OPTARG}" ;;
     p) bm_private_mode=true ;;
     P) bm_ignore_recent=true ;;
