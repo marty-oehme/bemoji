@@ -43,10 +43,10 @@ ln -s bemoji/bemoji /usr/local/bin/bemoji
 
 ### Arch Linux
 
-On Arch Linux, bemoji has been packaged for the [AUR](https://aur.archlinux.org/packages/bemoji-git) so it can be installed manually from here or easily with your preferred AUR helper, e.g.:
+On Arch Linux, bemoji has been packaged for the [AUR](https://aur.archlinux.org/packages?K=bemoji) so it can be installed manually from here or easily with your preferred AUR helper, e.g.:
 
 ```bash
-paru -S bemoji-git
+paru -S bemoji
 ```
 
 ## 💿 Usage
