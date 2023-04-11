@@ -54,6 +54,11 @@ setup() {
 typing result"
 }
 
+@test "Passes selection to custom typer tool through stdin" {
+    BEMOJI_TYPE_CMD="cat -" run bemoji -t 3>&-
+    assert_output "❤️"
+}
+
 @test "Runs custom default command" {
     BEMOJI_DEFAULT_CMD="echo my custom command" run bemoji 3>&-
     assert_output "my custom command"

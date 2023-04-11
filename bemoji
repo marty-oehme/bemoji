@@ -165,11 +165,14 @@ _clipper() {
 
 # Set default typing uti
 _typer() {
-    totype=$(cat -)
     if [ -n "$BEMOJI_TYPE_CMD" ]; then
         # shellcheck disable=SC2068
         ${BEMOJI_TYPE_CMD[@]}
-    elif [ -n "$WAYLAND_DISPLAY" ] && command -v wtype >/dev/null 2>&1; then
+        return
+    fi
+
+    totype=$(cat -)
+    if [ -n "$WAYLAND_DISPLAY" ] && command -v wtype >/dev/null 2>&1; then
         wtype -s 30 "$totype"
     elif [ -n "$DISPLAY" ] && command -v xdotool >/dev/null 2>&1; then
         xdotool type --delay 30 "$totype"

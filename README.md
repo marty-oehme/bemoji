@@ -222,6 +222,8 @@ BEMOJI_CLIP_CMD="path/to/your/clipboard/tool"
 BEMOJI_TYPE_CMD="path/to/your/xdotool"
 ```
 
+The candidate list (in the case of picker tool) or the picked selection are passed to the tools through stdin.
+
 This is pretty experimental and you'll have to see how well it works for you.
 The setting can not be changed through the commandline alone.
 
