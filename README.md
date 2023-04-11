@@ -78,7 +78,7 @@ bindsym Mod4+Shift+e exec bemoji -t
 For `riverwm`, put the following in `~/.config/river/init`:
 
 ```
-riverctl map normal $mod+Shift E spawn "bemoji -t"
+riverctl map normal Mod4+Shift E spawn "bemoji -t"
 ```
 
 In `sxhkd`, put the following into `~/.config/sxhkd/sxhkdrc`:
