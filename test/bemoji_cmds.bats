@@ -64,6 +64,11 @@ typing result"
     assert_output "my clipping"
 }
 
+@test "Returns status code 1 on picker status code 1" {
+    BEMOJI_PICKER_CMD="return 1" run bemoji -e 3>&-
+    assert_failure 1
+}
+
 @test "Prints output with newline by default" {
     bats_require_minimum_version 1.5.0
     BEMOJI_PICKER_CMD="echo heart" run --keep-empty-lines -- bemoji -e

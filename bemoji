@@ -206,7 +206,7 @@ result=$(echo "$result" | grep -o '^\S\+' | tr -d '\n')
 
 case "$exit_value" in
 1)
-    exit
+    exit 1
     ;;
 0)
     if [ ${#bm_cmds[@]} -eq 0 ]; then
