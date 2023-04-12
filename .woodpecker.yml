@@ -4,7 +4,8 @@ pipeline:
     commands:
       - /opt/bats/bin/bats test
 
-  release-prep: # prepare changelog and version information for release candidate
+  release-prep:
+    # prepare changelog and version information for release candidate
     when:
       event: tag
       tag: v*
@@ -13,7 +14,8 @@ pipeline:
       - sed -ne 's/bm_version=\(.*\)/\1/p' bemoji > NEWEST_VERSION.txt
       - awk '/^## \[\d/{p++} p==2{print; exit} p>=1' CHANGELOG.md | head -n -1 | tail -n+3 > NEWEST_CHANGES.txt
 
-  versioncompare: # ensure we correctly bumped versions
+  versioncompare:
+    # ensure we correctly bumped versions
     when:
       event: tag
       tag: v*
@@ -42,9 +44,10 @@ pipeline:
       - cp bemoji build
       - md2man -in README.md -out bemoji.1 && gzip bemoji.1
       - cp LICENSE README.md bemoji.1.gz build/doc
-      - tar -czvf bemoji-$BM_VERSION.tar.gz build/*
-      - zip -r bemoji-$BM_VERSION.zip build/*
-      - mv bemoji-$BM_VERSION.tar.gz bemoji-$BM_VERSION.zip dist
+      - cd build || exit 1
+      - tar -czvf bemoji-$BM_VERSION.tar.gz *
+      - zip -r bemoji-$BM_VERSION.zip *
+      - mv bemoji-$BM_VERSION.tar.gz bemoji-$BM_VERSION.zip ../dist
 
   release-gitea:
     group: release
