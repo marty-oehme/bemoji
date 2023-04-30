@@ -118,10 +118,10 @@ By default, bemoji will sort the list it displays by your most frequently and mo
 To disable this behavior, execute bemoji like the following:
 
 ```bash
-bemoji -P
+bemoji -P 0
 ```
 
-This will stop bemoji from re-ordering your emoji lists before displaying them.
+This will stop bemoji from adding recently used emoji before displaying the list.
 
 You can also stop bemoji from adding any emoji to your history in the first place:
 
@@ -133,19 +133,29 @@ This will not add any of the emoji you pick to your recent emojis.
 Put both together to completely ignore the recent emoji feature of the program:
 
 ```bash
-bemoji -Pp
+bemoji -p -P0
 ```
 
 Like this, you'll be hiding any recent personal emoji and no one will know that you always type 👄🍆💦.
+
+To limit the number of your recently used emoji that are shown without hiding them completely simply increase the number to however many you wish to display. 
+For example, to display only the top 4 recently used emoji:
+
+```bash
+bemoji -P 4
+```
 
 The recent list will also contain emoji that are *not* usually on your lists,
 so kept in single-use lists for example.
 If you don't wish those to show up, make use of these options.
 
-### Setting custom directories
+### Setting custom directories and editing history
 
 By default bemoji stores your recent history in `$XDG_STATE_HOME/bemoji-history.txt`,
 so most often in `~/.local/state/bemoji-history.txt`
+
+You can edit this file in any text editor to change your recent history,
+removing, adding or changing the emoji appearing there.
 
 You can overwrite the directories bemoji uses for its emoji lists and history files with the following two environment variables:
 
@@ -248,16 +258,16 @@ What follows is a list of all environment variables bemoji understands,
 with their default settings
 
 ```bash
-BEMOJI_DB_LOCATION=$XDG_DATA_HOME/bemoji # where the emoji lists reside
-BEMOJI_HISTORY_LOCATION=$XDG_STATE_HOME # where the state file resides
+BEMOJI_DB_LOCATION="$XDG_DATA_HOME/bemoji" # where the emoji lists reside
+BEMOJI_HISTORY_LOCATION="$XDG_STATE_HOME" # where the state file resides
 BEMOJI_CUSTOM_LIST="" # the custom emoji list to display
 BEMOJI_DOWNLOAD_LIST="" # the default emoji lists to download to database
-BEMOJI_DEFAULT_COMMAND=<clip-tool> # which command to invoke by default
-BEMOJI_PICKER_CMD=bemenu # which picker tool to use
-BEMOJI_CLIP_CMD=wl-copy # which clipboard tool to use
-BEMOJI_TYPE_CMD=wtype # which typing tool to use (ydotool will NOT work)
+BEMOJI_DEFAULT_COMMAND="" # which command to invoke by default
+BEMOJI_PICKER_CMD="bemenu" # which picker tool to use
+BEMOJI_CLIP_CMD="wl-copy" # which clipboard tool to use
+BEMOJI_TYPE_CMD="wtype" # which typing tool to use (ydotool will NOT work)
 BEMOJI_PRIVATE_MODE=false # whether to save new entries
-BEMOJI_IGNORE_RECENT=false # whether to display recent entries
+BEMOJI_LIMIT_RECENT="" # whether to display recent entries
 BEMOJI_ECHO_NEWLINE=true # whether to end the output with a newline character
 ```
 

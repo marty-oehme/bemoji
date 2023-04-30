@@ -18,7 +18,7 @@ bm_echo_newline=${BEMOJI_ECHO_NEWLINE:-true}
 # Do not save choices
 bm_private_mode=${BEMOJI_PRIVATE_MODE:-false}
 # Do not sort results
-bm_ignore_recent=${BEMOJI_IGNORE_RECENT:-false}
+bm_limit_recent="$BEMOJI_LIMIT_RECENT"
 
 # Report usage
 usage() {
@@ -35,7 +35,7 @@ usage() {
     echo " Other options:"
     echo "   -n             Do not print a newline after the picked emoji."
     echo "   -p             Do not save picked emoji to recent history."
-    echo "   -P             Do not order emoji by recently used."
+    echo "   -P <number>    Limit number of recent emoji to display."
     echo "   -D <choice>    Choose from default lists to download."
     echo "                  Valid choices: all|none|emoji|math (multiple choices possible)."
     echo "   -f <filepath>  Use a custom emoji database. Can be a url which will be retrieved."
@@ -51,7 +51,7 @@ version() {
 }
 
 # Get Options
-while getopts ":f:D:tcenpPhv" o; do
+while getopts ":f:D:tcenpP:hv" o; do
     case "${o}" in
     f) BEMOJI_CUSTOM_LIST="${OPTARG}" ;;
     t) bm_cmds+=(_typer) ;;
@@ -60,7 +60,7 @@ while getopts ":f:D:tcenpPhv" o; do
     n) bm_echo_newline=false ;;
     D) BEMOJI_DOWNLOAD_LIST="${OPTARG}" ;;
     p) bm_private_mode=true ;;
-    P) bm_ignore_recent=true ;;
+    P) bm_limit_recent="${OPTARG}" ;;
     h) usage 0 ;;
     v) version ;;
     *) usage 1 ;;
@@ -117,25 +117,33 @@ gather_emojis() {
         result=$(cat "$bm_db_location"/*.txt)
     fi
 
-    if [ "$bm_ignore_recent" = true ]; then
+    if [ -n "$bm_limit_recent" ] && [ "$bm_limit_recent" -eq 0 ]; then
         printf "%s" "$result"
-    else
-        printf "%s\n%s" "$(get_most_recent)" "$result" | cat -n - | sort -uk2 | sort -n | cut -f2-
+        return
     fi
+
+    printf "%s\n%s" "$(get_most_recent "$bm_limit_recent")" "$result" | cat -n - | sort -uk2 | sort -n | cut -f2-
 }
 
 get_most_recent() {
+    limit=${1}
     recent_file="$bm_history_file"
     if [ ! -f "$recent_file" ]; then
         touch "$recent_file"
     fi
     # TODO improve this messy line
-    sed -e '/^$/d' "$recent_file" |
+    local result
+    result=$(sed -e '/^$/d' "$recent_file" |
         sort |
         uniq -c |
-        sort -rn |
+        sort -k1rn |
         sed -e 's/^\s*//' |
-        cut -d' ' -f2-
+        cut -d' ' -f2-)
+    if [ -z "$limit" ]; then
+        echo "$result"
+    else
+        echo "$result" | head -n "$limit"
+    fi
 }
 
 add_to_recent() {
