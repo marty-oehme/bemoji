@@ -38,3 +38,11 @@ emoji2 picked up"
     assert_equal "$outcome" "Σ GREEK CAPITAL LETTER SIGMA"
     unstub curl
 }
+@test "Runs nerdfont download on -D nerd option" {
+    stub curl \
+        "printf 'meangingless\nafiller lines\n.nf-md-pipe_wrench:before { \n content: \"\\\f1354\";\n }'"
+    run bemoji -D nerd 3>&-
+    outcome=$(cat "$BEMOJI_DB_LOCATION/nerdfont.txt")
+    assert_equal "$outcome" "󱍔 md-pipe_wrench"
+    unstub curl
+}

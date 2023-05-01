@@ -10,9 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Pass through return code 1 from selection tool
-- (!) Number of displayed recent emoji can be set with `-P` option. This replaces previous `-P`
-  history flag toggle. Use number to set amount of recent entries to display, `-P3`. To
-  completely hide history use `-P0`
+- (!) Number of displayed recent emoji can be set with `-P` option:
+  This replaces previous `-P` history flag toggle. Use number to set amount of recent
+  entries to display, `-P3`. To completely hide history use `-P0`.
+- Add nerdfont emoji set download with `-D nerd`
 
 ### Changed
 

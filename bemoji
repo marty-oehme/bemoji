@@ -37,7 +37,7 @@ usage() {
     echo "   -p             Do not save picked emoji to recent history."
     echo "   -P <number>    Limit number of recent emoji to display."
     echo "   -D <choice>    Choose from default lists to download."
-    echo "                  Valid choices: all|none|emoji|math (multiple choices possible)."
+    echo "                  Valid choices: all|none|emoji|math|nerd (multiple choices possible)."
     echo "   -f <filepath>  Use a custom emoji database. Can be a url which will be retrieved."
     echo "   -v             Display current program version and directory configuration."
     echo "   -h             Show this help."
@@ -81,6 +81,7 @@ prepare_db() {
         elif echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'all'; then
             dl_default_emoji
             dl_math_symbols
+            dl_nerd_symbols
             return
         else
             if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'emoji'; then
@@ -88,6 +89,9 @@ prepare_db() {
             fi
             if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'math'; then
                 dl_math_symbols
+            fi
+            if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'nerd'; then
+                dl_nerd_symbols
             fi
         fi
     fi
@@ -106,6 +110,13 @@ dl_math_symbols() {
     curl -sSL "https://unicode.org/Public/math/latest/MathClassEx-15.txt" |
         grep -ve '^#' | cut -d';' -f3,7 | sed -e 's/;/ /' >"$bm_db_location/math.txt"
     printf "Downloaded math symbols set.\n"
+}
+dl_nerd_symbols() {
+    local nerd all
+    nerd=$(curl -sSL "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/css/nerd-fonts-generated.css")
+    all+=$(printf "%s" "$nerd" | sed -ne '/\.nf-/p' -e '/\s*[^_]content:/p' | sed -e 'N;s/^\.nf-\(.*\):before.* content: \"\\\(.*\)\";/\\U\2 \1/')
+    echo -e "$all" > "$bm_db_location/nerdfont.txt"
+    printf "Downloaded nerdfont symbols set.\n"
 }
 
 gather_emojis() {
