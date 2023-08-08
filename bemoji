@@ -163,7 +163,7 @@ _clipper() {
     fi
 }
 
-# Set default typing uti
+# Set default typing util
 _typer() {
     totype=$(cat -)
     if [ -n "$BEMOJI_TYPE_CMD" ]; then
@@ -184,6 +184,8 @@ _picker() {
     if [ -n "$BEMOJI_PICKER_CMD" ]; then
         # shellcheck disable=SC2068
         ${BEMOJI_PICKER_CMD[@]}
+    elif command -v ilia >/dev/null 2>&1; then
+        ilia -n -p textlist
     elif command -v bemenu >/dev/null 2>&1; then
         bemenu -p 🔍 -i -l 20
     elif command -v wofi >/dev/null 2>&1; then
