@@ -20,6 +20,14 @@ bm_private_mode=${BEMOJI_PRIVATE_MODE:-false}
 # Do not sort results
 bm_ignore_recent=${BEMOJI_IGNORE_RECENT:-false}
 
+declare -A default_pickers=(
+	["bemenu"]="bemenu -p 🔍 -i -l 20"
+	["wofi"]="wofi -p 🔍 -i --show dmenu"
+	["rofi"]="rofi -p 🔍 -i -dmenu --kb-custom-1 "Alt+1" --kb-custom-2 "Alt+2""
+	["dmenu"]="dmenu -p 🔍 -i -l 20"
+	["ilia"]="ilia -n -p textlist -l 🔍"
+)
+
 # Report usage
 usage() {
     echo "Usage: $(basename "$0") [-t | -c | -e] [-f <filepath> ] [-p] [-P] [-D <choices>]" 1>&2
@@ -184,20 +192,18 @@ _picker() {
     if [ -n "$BEMOJI_PICKER_CMD" ]; then
         # shellcheck disable=SC2068
         ${BEMOJI_PICKER_CMD[@]}
-    elif command -v ilia >/dev/null 2>&1; then
-        ilia -n -p textlist
-    elif command -v bemenu >/dev/null 2>&1; then
-        bemenu -p 🔍 -i -l 20
-    elif command -v wofi >/dev/null 2>&1; then
-        wofi -p 🔍 -i --show dmenu
-    elif command -v rofi >/dev/null 2>&1; then
-        rofi -p 🔍 -i -dmenu --kb-custom-1 "Alt+1" --kb-custom-2 "Alt+2"
-    elif command -v dmenu >/dev/null 2>&1; then
-        dmenu -p 🔍 -i -l 20
-    else
-        printf "No suitable picker tool found."
-        exit 1
-    fi
+		return
+	fi
+
+	for tool in "${!default_pickers[@]}"; do
+		if command -v "$tool" >/dev/null 2>&1; then
+			${default_pickers[$tool]}
+			return
+		fi
+	done
+
+	printf "No suitable picker tool found." 1>&2
+	exit 1
 }
 
 [ -n "$BEMOJI_CUSTOM_LIST" ] || prepare_db
