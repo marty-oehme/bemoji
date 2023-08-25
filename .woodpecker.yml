@@ -73,7 +73,7 @@ pipeline:
       - apk add file jq curl
       - BM_VERSION=$(cat NEWEST_VERSION.txt)
       - BM_CHANGED=$(sed -e 's|#||g' -e 's|^.*$|\0 <br />|' NEWEST_CHANGES.txt) # display newlines workaround
-      - echo "{\"tag_name\":\"$BM_VERSION\",\"target_commitish\":\"main\",\"name\":\"$BM_VERSION\",\"body\":\"$BM_CHANGED\",\"draft\":false,\"prerelease\":false,\"generate_release_notes\":false}" > data.json
+      - echo "{\"tag_name\":\"v${BM_VERSION}\",\"target_commitish\":\"main\",\"name\":\"v${BM_VERSION}\",\"body\":\"$BM_CHANGED\",\"draft\":false,\"prerelease\":false,\"generate_release_notes\":false}" > data.json
       - "response=$(curl -X POST -H \"Accept:\\ application/vnd.github+json\" -H \"Authorization:\\ Bearer $GITHUB_RELEASE_TOKEN\" https://api.github.com/repos/$GITHUB_REPO/releases -d \"@data.json\")"
       - "uploadurl=$(echo $response | jq -r '.upload_url' | cut -d'{' -f1)"
       - "[ $uploadurl = null ] && { echo $response; exit 1; }"
