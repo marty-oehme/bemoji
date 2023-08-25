@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-<!-- ### Added -->
+### Added
+
+- Add default support for `ilia` gtk-based picker tool, used by default in Regolith Linux
 
 <!-- ### Changed -->
 
