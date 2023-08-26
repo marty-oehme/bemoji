@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   This replaces previous `-P` history flag toggle. Use number to set amount of recent
   entries to display, `-P3`. To completely hide history use `-P0`.
 - Add nerdfont emoji set download with `-D nerd`
+- Add parsing for long-form options (`--private` instead of `-p` and so on):
+  Options requiring a value can be given both in space-separated (`--hist-limit 2`)
+  and equals-separated (`--hist-limit=2`) versions. POSIX option concatenation still
+  works (`-ne` to echo without newline).
 
 ### Changed
 

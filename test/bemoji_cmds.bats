@@ -85,3 +85,29 @@ typing result"
     BEMOJI_PICKER_CMD="echo heart" run --keep-empty-lines -- bemoji -ne
     assert_output --regexp '^heart$'
 }
+
+@test "Understands long-form options" {
+    run bemoji --help
+    assert_success
+    assert_output --partial "A simple emoji picker."
+}
+
+@test "Understands long-form equals values" {
+    BEMOJI_CLIP_CMD="echo heart" run bemoji --hist-limit=0
+    assert_success
+}
+
+@test "Understands long-form spaced values" {
+    BEMOJI_CLIP_CMD="echo heart" run bemoji --hist-limit 0
+    assert_success
+}
+
+@test "Understands short-form spaced values" {
+    BEMOJI_CLIP_CMD="echo heart" run bemoji -P 0
+    assert_success
+}
+
+@test "Can concatenate short-form options and values" {
+    BEMOJI_CLIP_CMD="echo heart" run bemoji -neP0
+    assert_success
+}

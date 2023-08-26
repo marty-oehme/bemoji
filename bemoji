@@ -22,27 +22,27 @@ bm_limit_recent="$BEMOJI_LIMIT_RECENT"
 
 # Report usage
 usage() {
-    echo "Usage: $(basename "$0") [-t | -c | -e] [-f <filepath> ] [-p] [-P] [-D <choices>]" 1>&2
-    echo
-    echo "A simple emoji picker. Runs on bemenu/wofi/rofi/dmenu by default."
-    echo "Invoked without arguments sends the picked emoji to the clipboard."
-    echo
-    echo " Command options (can be combined):"
-    echo "   -t             Simulate typing the emoji choice with the keyboard."
-    echo "   -c             Send emoji choice to the clipboard. (default)"
-    echo "   -e             Only echo out the picked emoji."
-    echo ""
-    echo " Other options:"
-    echo "   -n             Do not print a newline after the picked emoji."
-    echo "   -p             Do not save picked emoji to recent history."
-    echo "   -P <number>    Limit number of recent emoji to display."
-    echo "   -D <choice>    Choose from default lists to download."
-    echo "                  Valid choices: all|none|emoji|math|nerd (multiple choices possible)."
-    echo "   -f <filepath>  Use a custom emoji database. Can be a url which will be retrieved."
-    echo "   -v             Display current program version and directory configuration."
-    echo "   -h             Show this help."
-    echo
-    exit "$1"
+	echo "Usage: $(basename "$0") [-t | -c | -e] [-f <filepath> ] [-p] [-P] [-D <choices>]" 1>&2
+	echo
+	echo "A simple emoji picker. Runs on bemenu/wofi/rofi/dmenu by default."
+	echo "Invoked without arguments sends the picked emoji to the clipboard."
+	echo
+	echo " Command options (can be combined):"
+	echo "  -t, --type                 Simulate typing the emoji choice with the keyboard."
+	echo "  -c, --clip                 Send emoji choice to the clipboard. (default)"
+	echo "  -e, --echo                 Only echo out the picked emoji."
+	echo ""
+	echo " Other options:"
+	echo "  -n, --noline               Do not print a newline after the picked emoji."
+	echo "  -p, --private              Do not save picked emoji to recent history."
+	echo "  -P, --hist-limit <number>  Limit number of recent emoji to display."
+	echo "  -D, --download <choice>    Choose from default lists to download."
+	echo "                             Valid choices: all|none|emoji|math|nerd (multiple choices possible)."
+	echo "  -f, --file <filepath>      Use a custom emoji database. Can be a url which will be retrieved."
+	echo "  -v, --version              Display current program version and directory configuration."
+	echo "  -h, --help                 Show this help."
+	echo
+	exit "$1"
 }
 
 version() {
@@ -50,22 +50,67 @@ version() {
     exit
 }
 
-# Get Options
-while getopts ":f:D:tcenpP:hv" o; do
-    case "${o}" in
-    f) BEMOJI_CUSTOM_LIST="${OPTARG}" ;;
-    t) bm_cmds+=(_typer) ;;
-    c) bm_cmds+=(_clipper) ;;
-    e) bm_cmds+=(cat) ;;
-    n) bm_echo_newline=false ;;
-    D) BEMOJI_DOWNLOAD_LIST="${OPTARG}" ;;
-    p) bm_private_mode=true ;;
-    P) bm_limit_recent="${OPTARG}" ;;
-    h) usage 0 ;;
-    v) version ;;
-    *) usage 1 ;;
-    esac
-done
+parse_cli() {
+	while getopts cD:ef:hnpP:tv-: arg "$@"; do
+		case "$arg" in
+		c) bm_cmds+=(_clipper) ;;
+		D) _opt_set_download_list "${OPTARG}" ;;
+		e) bm_cmds+=(cat) ;;
+		f) _opt_set_custom_list "${OPTARG}" ;;
+		h) usage 0 ;;
+		n) bm_echo_newline=false ;;
+		p) bm_private_mode=true ;;
+		P) _opt_set_hist_limit "${OPTARG}" ;;
+		t) bm_cmds+=(_typer) ;;
+		v) version ;;
+		-)
+			LONG_OPTARG="${OPTARG#*=}"
+			case "$OPTARG" in
+			clip) bm_cmds+=(_clipper) ;;
+			download=?*) _opt_set_download_list "${LONG_OPTARG}" ;;
+			download*)
+				_opt_set_download_list "${*:$OPTIND:1}"
+				OPTIND=$((OPTIND + 1))
+				;;
+			echo) bm_cmds+=(cat) ;;
+			file=?*) _opt_set_custom_list "${LONG_OPTARG}" ;;
+			file*)
+				_opt_set_custom_list "${*:$OPTIND:1}"
+				OPTIND=$((OPTIND + 1))
+				;;
+			help) usage 0 ;;
+			noline) bm_echo_newline=false ;;
+			private) bm_private_mode=true ;;
+			hist-limit=?*) _opt_set_hist_limit "${LONG_OPTARG}" ;;
+			hist-limit*)
+				_opt_set_hist_limit "${*:$OPTIND:1}"
+				OPTIND=$((OPTIND + 1))
+				;;
+			type) bm_cmds+=(_typer) ;;
+			version) version ;;
+			'') break ;;
+			*)
+				echo "Unknown option: ${OPTARG}" 1>&2
+				usage 1
+				;;
+			esac
+			;;
+		\?) exit 2 ;;
+		esac
+	done
+	shift $((OPTIND - 1))
+	OPTIND=1
+}
+
+_opt_set_custom_list() {
+	BEMOJI_CUSTOM_LIST="$1"
+}
+_opt_set_download_list() {
+	BEMOJI_DOWNLOAD_LIST="$1"
+}
+_opt_set_hist_limit() {
+	bm_limit_recent="$1"
+}
 
 prepare_db() {
     # Create list directory
@@ -219,6 +264,8 @@ _picker() {
         exit 1
     fi
 }
+
+parse_cli "$@"
 
 [ -n "$BEMOJI_CUSTOM_LIST" ] || prepare_db
 result=$(gather_emojis | _picker)

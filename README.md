@@ -118,7 +118,7 @@ By default, bemoji will sort the list it displays by your most frequently and mo
 To disable this behavior, execute bemoji like the following:
 
 ```bash
-bemoji -P 0
+bemoji --hist-limit 0
 ```
 
 This will stop bemoji from adding recently used emoji before displaying the list.
@@ -126,11 +126,12 @@ This will stop bemoji from adding recently used emoji before displaying the list
 You can also stop bemoji from adding any emoji to your history in the first place:
 
 ```bash
-bemoji -p
+bemoji --private
 ```
 
 This will not add any of the emoji you pick to your recent emojis.
-Put both together to completely ignore the recent emoji feature of the program:
+Put both together to completely ignore the recent emoji feature of the program
+(these are the equivalent short versions of the options above):
 
 ```bash
 bemoji -p -P0
@@ -142,7 +143,7 @@ To limit the number of your recently used emoji that are shown without hiding th
 For example, to display only the top 4 recently used emoji:
 
 ```bash
-bemoji -P 4
+bemoji --hist-limit 4
 ```
 
 The recent list will also contain emoji that are *not* usually on your lists,
@@ -171,7 +172,7 @@ There are no equivalent commandline arguments to overwrite these two settings.
 A custom emoji list can be supplied as commandline argument `-f` or `BEMOJI_CUSTOM_LIST` environment variable.
 
 ```bash
-bemoji -f path/to/my/list.txt
+bemoji --file path/to/my/list.txt
 ```
 
 The list will override the normally presented emoji,
@@ -191,7 +192,7 @@ By default, it only downloads emoji, though you can have it download math symbol
 To download additional sets, execute bemoji like the following:
 
 ```bash
-bemoji -D all
+bemoji --download all
 ```
 
 This will download *all* default sets bemoji knows - which is currently the default emoji list, nerd font icons, and a long list of math symbols.
@@ -201,7 +202,7 @@ Other valid options for this setting are `emoji`, `math`, `nerd`, `none`.
 bemoji -D "math emoji nerd"
 ```
 
-The above command is equivalent to `all` as you can mention multiple sets you want downloaded.
+The above command is equivalent to the previous `all` as you can mention multiple sets you want downloaded.
 
 If set to `none` and no files are in the emoji directory,
 bemoji will complain and not show anything.
@@ -244,7 +245,7 @@ You can execute bemoji with the `-e` flag with which you tell it not to do anyth
 This can be very useful for creating your own little script with it:
 
 ```bash
-bemoji -e | cat <(echo -n "https://emojipedia.org/") - | xargs xdg-open
+bemoji --echo | cat <(echo -n "https://emojipedia.org/") - | xargs xdg-open
 ```
 
 This snippet will open a wiki page for the picked emoji in your browser.
