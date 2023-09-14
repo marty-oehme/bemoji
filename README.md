@@ -284,7 +284,12 @@ If you have an idea or improvement, don't hesitate to open a merge request!
 
 This project makes use of [bash-bats](https://github.com/bats-core/bats-core) (community fork) to test some of its functionality.
 
-To run the tests locally, simply execute `./test/bats/bin/bats test`.
+To run the tests locally:
+```
+git submodule init
+git submodule update
+./test/bats/bin/bats test
+```
 
 I would suggest running the test suite in docker instead, just to minimize the possibility of something going awry and borking up your local file system.
-To run the tests in a docker suite, execute `docker run --rm -it -v "$PWD:/code" bats/bats:latest /code/test`
+To run the tests in a docker suite, execute `docker run --rm -it -v "$PWD:/code" bats/bats:latest /code/test` after initializing the git submodules as listed above.

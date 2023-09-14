@@ -20,6 +20,14 @@ bm_private_mode=${BEMOJI_PRIVATE_MODE:-false}
 # Do not sort results
 bm_limit_recent="$BEMOJI_LIMIT_RECENT"
 
+declare -A default_pickers=(
+	["bemenu"]="bemenu -p 🔍 -i -l 20"
+	["wofi"]="wofi -p 🔍 -i --show dmenu"
+	["rofi"]="rofi -p 🔍 -i -dmenu --kb-custom-1 "Alt+1" --kb-custom-2 "Alt+2""
+	["dmenu"]="dmenu -p 🔍 -i -l 20"
+	["ilia"]="ilia -n -p textlist -l 'Emoji' -i desktop-magnifier"
+)
+
 # Report usage
 usage() {
 	echo "Usage: $(basename "$0") [-t | -c | -e] [-f <filepath> ] [-p] [-P] [-D <choices>]" 1>&2
@@ -227,7 +235,7 @@ _clipper() {
     fi
 }
 
-# Set default typing uti
+# Set default typing util
 _typer() {
     if [ -n "$BEMOJI_TYPE_CMD" ]; then
         # shellcheck disable=SC2068
@@ -251,18 +259,18 @@ _picker() {
     if [ -n "$BEMOJI_PICKER_CMD" ]; then
         # shellcheck disable=SC2068
         ${BEMOJI_PICKER_CMD[@]}
-    elif command -v bemenu >/dev/null 2>&1; then
-        bemenu -p 🔍 -i -l 20
-    elif command -v wofi >/dev/null 2>&1; then
-        wofi -p 🔍 -i --show dmenu
-    elif command -v rofi >/dev/null 2>&1; then
-        rofi -p 🔍 -i -dmenu --kb-custom-1 "Alt+1" --kb-custom-2 "Alt+2"
-    elif command -v dmenu >/dev/null 2>&1; then
-        dmenu -p 🔍 -i -l 20
-    else
-        printf "No suitable picker tool found."
-        exit 1
-    fi
+		return
+	fi
+
+	for tool in "${!default_pickers[@]}"; do
+		if command -v "$tool" >/dev/null 2>&1; then
+			${default_pickers[$tool]}
+			return
+		fi
+	done
+
+	printf "No suitable picker tool found." 1>&2
+	exit 1
 }
 
 parse_cli "$@"
