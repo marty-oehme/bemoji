@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add default support for `fuzzel` wayland-native picker tool
 - Add default support for `ilia` gtk-based picker tool, used by default in Regolith Linux
 - Pass through return code 1 from selection tool
 - (!) Number of displayed recent emoji can be set with `-P` option:
