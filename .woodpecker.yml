@@ -8,7 +8,7 @@ steps:
     # prepare changelog and version information for release candidate
     when:
       event: tag
-      tag: v*
+      ref: refs/tags/v*
     image: alpine
     commands:
       - sed -ne 's/bm_version=\(.*\)/\1/p' bemoji > NEWEST_VERSION.txt
@@ -18,7 +18,7 @@ steps:
     # ensure we correctly bumped versions
     when:
       event: tag
-      tag: v*
+      ref: refs/tags/v*
     image: alpine
     secrets: [ github_release_token, github_repo ]
     commands:
@@ -35,7 +35,7 @@ steps:
   build:
     when:
       event: tag
-      tag: v*
+      ref: refs/tags/v*
     image: savant/md2man
     commands:
       - apk update && apk add zip
@@ -53,7 +53,7 @@ steps:
     group: release
     when:
       event: tag
-      tag: v*
+      ref: refs/tags/v*
     image: plugins/gitea-release
     settings:
       api_key:
@@ -66,7 +66,7 @@ steps:
   release-github:
     when:
       event: tag
-      tag: v*
+      ref: refs/tags/v*
     image: alpine
     secrets: [ github_release_token, github_repo ]
     commands:
