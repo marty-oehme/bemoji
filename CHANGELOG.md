@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Always download from newest emoji list url
 - Pass selection to custom typing tools through stdin
+- Pass info messages to stderr to avoid passing to picker tools
 
 <!-- ### Security -->
 
