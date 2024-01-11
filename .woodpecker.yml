@@ -1,4 +1,4 @@
-pipeline:
+steps:
   test:
     image: bats/bats
     commands:
