@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+<!-- ### Added -->
+
+<!-- ### Changed -->
+
+<!-- ### Deprecated -->
+
+<!-- ### Removed -->
+
+<!-- ### Fixed -->
+
+<!-- ### Security -->
+
+## [0.4.0] - 2024-02-22
+
 ### Added
 
 - Add default support for `fuzzel` wayland-native picker tool
@@ -30,17 +44,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   by default).
 - (!) `XDG_CACHE_LOCATION` renamed to `XDG_HISTORY_LOCATION` to better signify its purpose
 
-<!-- ### Deprecated -->
-
-<!-- ### Removed -->
-
 ### Fixed
 
 - Always download from newest emoji list url
 - Pass selection to custom typing tools through stdin
 - Pass info messages to stderr to avoid passing to picker tools
-
-<!-- ### Security -->
 
 ## [0.3.0] - 2022-11-10
 
