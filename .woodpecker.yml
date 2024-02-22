@@ -50,7 +50,6 @@ steps:
       - mv bemoji-$BM_VERSION.tar.gz bemoji-$BM_VERSION.zip ../dist
 
   release-gitea:
-    group: release
     when:
       event: tag
       ref: refs/tags/v*
