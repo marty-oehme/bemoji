@@ -26,7 +26,7 @@ declare -A default_pickers=(
 	["rofi"]="rofi -p 🔍 -i -dmenu --kb-custom-1 "Alt+1" --kb-custom-2 "Alt+2""
 	["dmenu"]="dmenu -p 🔍 -i -l 20"
 	["ilia"]="ilia -n -p textlist -l 'Emoji' -i desktop-magnifier"
-	["fuzzel"]="fuzzel -d -p 🔍"
+	["fuzzel"]="fuzzel -d -p '🔍 '"
 )
 
 # Report usage
