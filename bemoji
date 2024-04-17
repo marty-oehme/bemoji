@@ -270,7 +270,7 @@ _picker() {
 
 	for tool in "${!default_pickers[@]}"; do
 		if command -v "$tool" >/dev/null 2>&1; then
-			${default_pickers[$tool]}
+			eval "${default_pickers[$tool]}"
 			return
 		fi
 	done
