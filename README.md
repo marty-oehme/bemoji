@@ -235,7 +235,13 @@ BEMOJI_TYPE_CMD="path/to/your/xdotool"
 
 The candidate list (in the case of picker tool) or the picked selection are passed to the tools through stdin.
 
-This is pretty experimental and you'll have to see how well it works for you.
+For example, to manually invoke fuzzel with no extra options as the picker for bemoji you would use:
+
+```bash
+BEMOJI_PICKER_CMD="fuzzel -d" bemoji
+```
+
+This is somewhat experimental still and you'll have to see how well it works for you.
 The setting can not be changed through the commandline alone.
 
 ### Execute a custom command with my emoji
