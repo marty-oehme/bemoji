@@ -26,7 +26,7 @@ see Options below.
 
 Option 1. Clone the repository and put the executable somewhere in your path:
 
-```bash
+```sh
 git clone <INSERT-REPOSITORY>
 chmod +x bemoji/bemoji
 mv bemoji/bemoji /usr/local/bin/bemoji
@@ -35,7 +35,7 @@ rm -r bemoji
 
 Option 2. Clone the repository and link the executable to your path:
 
-```bash
+```sh
 git clone <INSERT-REPOSITORY>
 chmod +x bemoji/bemoji
 ln -s bemoji/bemoji /usr/local/bin/bemoji
@@ -45,7 +45,7 @@ ln -s bemoji/bemoji /usr/local/bin/bemoji
 
 On Arch Linux, bemoji has been packaged for the [AUR](https://aur.archlinux.org/packages?K=bemoji) so it can be installed manually from here or easily with your preferred AUR helper, e.g.:
 
-```bash
+```sh
 paru -S bemoji # or bemoji-git
 ```
 
@@ -117,7 +117,7 @@ The description can have as many words and whitespaces as you want.
 By default, bemoji will sort the list it displays by your most frequently and most recently used emoji.
 To disable this behavior, execute bemoji like the following:
 
-```bash
+```sh
 bemoji --hist-limit 0
 ```
 
@@ -125,7 +125,7 @@ This will stop bemoji from adding recently used emoji before displaying the list
 
 You can also stop bemoji from adding any emoji to your history in the first place:
 
-```bash
+```sh
 bemoji --private
 ```
 
@@ -133,16 +133,16 @@ This will not add any of the emoji you pick to your recent emojis.
 Put both together to completely ignore the recent emoji feature of the program
 (these are the equivalent short versions of the options above):
 
-```bash
+```sh
 bemoji -p -P0
 ```
 
 Like this, you'll be hiding any recent personal emoji and no one will know that you always type 👄🍆💦.
 
-To limit the number of your recently used emoji that are shown without hiding them completely simply increase the number to however many you wish to display. 
+To limit the number of your recently used emoji that are shown without hiding them completely simply increase the number to however many you wish to display.
 For example, to display only the top 4 recently used emoji:
 
-```bash
+```sh
 bemoji --hist-limit 4
 ```
 
@@ -160,7 +160,7 @@ removing, adding or changing the emoji appearing there.
 
 You can overwrite the directories bemoji uses for its emoji lists and history files with the following two environment variables:
 
-```
+```sh
 BEMOJI_DB_LOCATION=/path/to/my/emoji/directory
 BEMOJI_HISTORY_LOCATION=/path/to/my/state/directory
 ```
@@ -171,7 +171,7 @@ There are no equivalent commandline arguments to overwrite these two settings.
 
 A custom emoji list can be supplied as commandline argument `-f` or `BEMOJI_CUSTOM_LIST` environment variable.
 
-```bash
+```sh
 bemoji --file path/to/my/list.txt
 ```
 
@@ -181,7 +181,7 @@ To display *only* the emoji list passed in, pass an extra `-P` flag to bemoji.
 
 The path can also be a weblink which bemoji will download and use:
 
-```bash
+```sh
 bemoji -f "https://raw.githubusercontent.com/jchook/emoji-menu/master/data/emojis.txt"
 ```
 
@@ -191,14 +191,14 @@ bemoji automatically downloads an emoji list for you to use on first invocation.
 By default, it only downloads emoji, though you can have it download math symbols and nerdfont icons as well.
 To download additional sets, execute bemoji like the following:
 
-```bash
+```sh
 bemoji --download all
 ```
 
 This will download *all* default sets bemoji knows - which is currently the default emoji list, nerd font icons, and a long list of math symbols.
 Other valid options for this setting are `emoji`, `math`, `nerd`, `none`.
 
-```bash
+```sh
 bemoji -D "math emoji nerd"
 ```
 
@@ -217,7 +217,7 @@ which skips to a new line in most circumstances.
 
 If you wish to prevent this character in the final output, use:
 
-```bash
+```sh
 bemoji -n
 ```
 
@@ -227,7 +227,7 @@ Using this option will suppress the newline character and *only* print `🦊` as
 
 If you want to replace one of the default supported tools with your own you can do this through environment variables:
 
-```bash
+```sh
 BEMOJI_PICKER_CMD="path/to/your/picker-tool"
 BEMOJI_CLIP_CMD="path/to/your/clipboard/tool"
 BEMOJI_TYPE_CMD="path/to/your/xdotool"
@@ -237,7 +237,7 @@ The candidate list (in the case of picker tool) or the picked selection are pass
 
 For example, to manually invoke fuzzel with no extra options as the picker for bemoji you would use:
 
-```bash
+```sh
 BEMOJI_PICKER_CMD="fuzzel -d" bemoji
 ```
 
@@ -264,7 +264,7 @@ This is just an example to show how the echo mode works.
 What follows is a list of all environment variables bemoji understands,
 with their default settings
 
-```bash
+```sh
 BEMOJI_DB_LOCATION="$XDG_DATA_HOME/bemoji" # where the emoji lists reside
 BEMOJI_HISTORY_LOCATION="$XDG_STATE_HOME" # where the state file resides
 BEMOJI_CUSTOM_LIST="" # the custom emoji list to display
@@ -291,7 +291,8 @@ If you have an idea or improvement, don't hesitate to open a merge request!
 This project makes use of [bash-bats](https://github.com/bats-core/bats-core) (community fork) to test some of its functionality.
 
 To run the tests locally:
-```
+
+```sh
 git submodule init
 git submodule update
 ./test/bats/bin/bats test
