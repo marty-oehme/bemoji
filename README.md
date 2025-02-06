@@ -314,6 +314,23 @@ If there are any problems, don't hesitate to open an issue.
 
 If you have an idea or improvement, don't hesitate to open a merge request!
 
+### Known issues
+
+There is a known issue concerning some GUI application which do not receive the correct emojis
+when auto-typing and instead a bunch of empty unicode squares.
+It seems to be an issue with `wtype` and may need to be fixed upstream.
+
+Unfortunately, `wtype` is the only stable wayland typing backend to my current knowledge.
+Until `bemoji` supports more typing backends on wayland, a workaround seems to be to save the
+emoji to the clipboard and have a typing tool paste the contents of the clipboard directly,
+like the following:
+
+```sh
+bemoji -cn && echo key ctrl+v | dotool
+```
+
+The issue is tracked at [#34](https://github.com/marty-oehme/bemoji/issues/34).
+
 ### Running tests
 
 This project makes use of [bash-bats](https://github.com/bats-core/bats-core) (community fork) to test some of its functionality.
