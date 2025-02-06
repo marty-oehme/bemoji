@@ -264,6 +264,22 @@ This is just an example to show how the echo mode works.
 What follows is a list of all environment variables bemoji understands,
 with their default settings
 
+| Description                       | Commandline option |     env                     | default               |
+| ---                               | ---                | ---                         | ---                   |
+| enable/disable newline            | -n, --noline       | BEMOJI_ECHO_NEWLINE         | true                  |
+| enable private mode               | -p,--private       | BEMOJI_PRIVATE_MODE         | false                 |
+| limit history items               | -P,--hist-limit    | BEMOJI_LIMIT_RECENT         |                       |
+| download specific emoji lists     | -D,--download      | BEMOJI_DOWNLOAD_LIST        |                       |
+| read emoji from file              | -f,--file          | BEMOJI_CUSTOM_LIST          |                       |
+| emoji lists directory             |                    | BEMOJI_DB_LOCATION          | $XDG_DATA_HOME/bemoji |
+| emoji history directory           |                    | BEMOJI_HISTORY_LOCATION     | $XDG_STATE_HOME       |
+| custom default command            |                    | BEMOJI_DEFAULT_CMD          |                       |
+| custom type command               |                    | BEMOJI_TYPE_CMD             |                       |
+| custom pick command               |                    | BEMOJI_PICKER_CMD           |                       |
+| custom clip command               |                    | BEMOJI_CLIP_CMD             |                       |
+
+The environment variables have the following effects:
+
 ```sh
 BEMOJI_DB_LOCATION="$XDG_DATA_HOME/bemoji" # where the emoji lists reside
 BEMOJI_HISTORY_LOCATION="$XDG_STATE_HOME" # where the state file resides
@@ -277,6 +293,18 @@ BEMOJI_PRIVATE_MODE=false # whether to save new entries
 BEMOJI_LIMIT_RECENT="" # whether to display recent entries
 BEMOJI_ECHO_NEWLINE=true # whether to end the output with a newline character
 ```
+
+They can either be set like `export BEMOJI_LIMIT_RECENT=5` before executing `bemoji` and will
+remain in the shell environment.
+Or they can be set for just a single run of `bemoji` like this:
+
+```sh
+BEMOJI_ECHO_NEWLINE=true BEMOJI_PRIVATE_MODE=true bemoji
+```
+
+This is especially useful for advanced configurations like custom commands which do not have an
+equivalent option to be set. Be careful with setting environment variables as setting them wrong
+or forgetting about them can have detrimental impacts on the functionality of this program!
 
 ## 🤗 Issues
 
