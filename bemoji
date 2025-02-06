@@ -287,6 +287,14 @@ exit_value="$?"
 [ "$bm_private_mode" = true ] || add_to_recent "$result"
 result=$(echo "$result" | grep -o '^\S\+' | tr -d '\n')
 
+printout() { # $1=emoji
+    if [ "$bm_echo_newline" = true ]; then
+        printf "%s\n" "$*"
+    else
+        printf "%s" "$*"
+    fi
+}
+
 case "$exit_value" in
 1)
     exit 1
@@ -295,21 +303,20 @@ case "$exit_value" in
     if [ ${#bm_cmds[@]} -eq 0 ]; then
         if [ -n "$bm_default_cmd" ]; then
             # shellcheck disable=SC2068
-            echo "$result" | ${bm_default_cmd[@]}
+            printout "$result" | ${bm_default_cmd[@]}
             exit
         fi
         bm_cmds+=(_clipper)
     fi
     for cmd in "${bm_cmds[@]}"; do
-        [ "$bm_echo_newline" = true ] && echo_opts= || echo_opts=-n
-        echo $echo_opts "$result" | "$cmd"
+        printout "$result" | "$cmd"
     done
     ;;
 10)
-    echo "$result" | _clipper
+    printout "$result" | _clipper
     ;;
 11)
-    echo "$result" | _typer
+    printout "$result" | _typer
     ;;
 esac
 exit
