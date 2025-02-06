@@ -264,14 +264,13 @@ _typer() {
 # Set default picker util
 _picker() {
     if [ -n "$BEMOJI_PICKER_CMD" ]; then
-        # shellcheck disable=SC2068
-        ${BEMOJI_PICKER_CMD[@]}
+        eval "${BEMOJI_PICKER_CMD[*]}"
 		return
 	fi
 
 	for tool in "${!default_pickers[@]}"; do
 		if command -v "$tool" >/dev/null 2>&1; then
-			${default_pickers[$tool]}
+			eval "${default_pickers[$tool]}"
 			return
 		fi
 	done
