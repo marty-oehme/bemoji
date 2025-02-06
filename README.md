@@ -137,7 +137,7 @@ Put both together to completely ignore the recent emoji feature of the program
 bemoji -p -P0
 ```
 
-Like this, you'll be hiding any recent personal emoji and no one will know that you always type 👄🍆💦.
+Like this, you'll be hiding any recent personal emoji and keep any new ones you use out of your history.
 
 To limit the number of your recently used emoji that are shown without hiding them completely simply increase the number to however many you wish to display.
 For example, to display only the top 4 recently used emoji:
