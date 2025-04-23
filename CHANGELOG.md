@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-<!-- ### Added -->
+### Added
+
+- Support for wmenu picker by default
+- Support for wl-ime-type wayland typing tool
 
 <!-- ### Changed -->
 
@@ -15,7 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ### Removed -->
 
-<!-- ### Fixed -->
+### Fixed
+
+- Correct padding for fuzzel picker prompt
+- Custom picker commands being correctly evaluated
+- Pass through of emojis to custom type commands
 
 <!-- ### Security -->
 
