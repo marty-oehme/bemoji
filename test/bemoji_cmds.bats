@@ -43,19 +43,19 @@ setup() {
 }
 
 @test "Runs typing command on -t option" {
-    BEMOJI_TYPE_CMD="echo typing result" run bemoji -t 3>&-
-    assert_output "typing result"
+    BEMOJI_PICKER_CMD="echo totype" BEMOJI_TYPE_CMD="echo typing result" run bemoji -t 3>&-
+    assert_output "typing result totype"
 }
 
 @test "Runs typing and clipping on -ct options" {
-    BEMOJI_CLIP_CMD="echo clipping result" BEMOJI_TYPE_CMD="echo typing result" run bemoji -ct 3>&-
+    BEMOJI_PICKER_CMD="echo totype" BEMOJI_CLIP_CMD="echo clipping result" BEMOJI_TYPE_CMD="echo typing result" run bemoji -ct 3>&-
     assert_output \
 "clipping result
-typing result"
+typing result totype"
 }
 
 @test "Passes selection to custom typer tool through stdin" {
-    BEMOJI_TYPE_CMD="cat -" run bemoji -t 3>&-
+    BEMOJI_TYPE_CMD="printf " run bemoji -t 3>&-
     assert_output "❤️"
 }
 
