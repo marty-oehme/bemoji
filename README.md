@@ -12,7 +12,7 @@ Will remember your favorite emojis and give you quick access.
 
 ### Dependencies
 
-* One of `bemenu`, `wofi`, `rofi`, `dmenu`, `ilia`, `fuzzel` or supplying your own picker.
+* One of `bemenu`, `wofi`, `rofi`, `dmenu`, `wmenu`, `ilia`, `fuzzel` or supplying your own picker.
 * One of `wl-copy`, `xclip`, `xsel` or supplying your own clipboard tool.
 * One of `wtype`, `xdotool` or supplying your own typing tool.
 * `sed`, `grep`, `cut`, `sort`, `uniq`, `tr`, `curl` if using the download functionality.
