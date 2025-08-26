@@ -254,8 +254,12 @@ _typer() {
         return
     fi
 
-    if [ -n "$WAYLAND_DISPLAY" ] && command -v wtype >/dev/null 2>&1; then
-        wtype -s 30 "$totype"
+    if [ -n "$WAYLAND_DISPLAY" ]; then
+        if command -v wtype >/dev/null 2>&1; then
+            wtype -s 30 "$totype"
+        elif command -v wl-ime-type >/dev/null 2>&1; then
+            wl-ime-type "$totype"
+        fi
     elif [ -n "$DISPLAY" ] && command -v xdotool >/dev/null 2>&1; then
         xdotool type --delay 30 "$totype"
     else
