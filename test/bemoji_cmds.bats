@@ -62,6 +62,13 @@ typing result totype"
     assert_failure 1
 }
 
+@test "Prints output with newline by default" {
+    bats_require_minimum_version 1.5.0
+    BEMOJI_PICKER_CMD="echo heart" run --keep-empty-lines -- bemoji -e
+    assert_output --regexp '^heart
+$'
+}
+
 @test "Prints output without newline on -n option" {
     bats_require_minimum_version 1.5.0
     BEMOJI_PICKER_CMD="echo heart" run --keep-empty-lines -- bemoji -ne
