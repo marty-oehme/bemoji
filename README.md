@@ -14,7 +14,7 @@ Will remember your favorite emojis and give you quick access.
 
 * One of `bemenu`, `wofi`, `rofi`, `dmenu`, `wmenu`, `ilia`, `fuzzel` or supplying your own picker.
 * One of `wl-copy`, `xclip`, `xsel` or supplying your own clipboard tool.
-* One of `wtype`, `xdotool` or supplying your own typing tool.
+* One of `wtype`, `wl-ime-type`, `xdotool` or supplying your own typing tool.
 * `sed`, `grep`, `cut`, `sort`, `uniq`, `tr`, `curl` if using the download functionality.
 
 To see how to substitute the default choices with your own tools,
@@ -318,11 +318,11 @@ If you have an idea or improvement, don't hesitate to open a merge request!
 
 There is a known issue concerning some GUI application which do not receive the correct emojis
 when auto-typing and instead a bunch of empty unicode squares.
-It seems to be an issue with `wtype` and may need to be fixed upstream.
+It seems to be an issue with `wtype` and may need to be fixed upstream,
+but is not an issue with `wl-ime-type` if it works with the application.
 
-Unfortunately, `wtype` is the only stable wayland typing backend to my current knowledge.
-Until `bemoji` supports more typing backends on wayland, a workaround seems to be to save the
-emoji to the clipboard and have a typing tool paste the contents of the clipboard directly,
+A workaround for `wtype` seems to be to save the emoji to the clipboard
+and have a typing tool paste the contents of the clipboard directly,
 like the following:
 
 ```sh
@@ -330,6 +330,17 @@ bemoji -cn && echo key ctrl+v | dotool
 ```
 
 The issue is tracked at [#34](https://github.com/marty-oehme/bemoji/issues/34).
+
+`wl-ime-type` only works with applications which support the Wayland `text-input-v3` protocol, including GTK3/4 and Qt5/6 applications.
+Some applications which should support `text-input-v3` do not currently work with `wl-ime-type`, including kitty and wezterm.
+
+Chromium and Electron applications support `text-input-v3`, but support is currently hidden behind command line flags:
+
+```sh
+--enable-wayland-ime --wayland-text-input-version=3
+```
+
+The `wayland-text-input-v3` flag can also be enabled in Chromium.
 
 ### Running tests
 
