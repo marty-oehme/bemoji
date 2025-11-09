@@ -345,6 +345,16 @@ Chromium and Electron applications support `text-input-v3`, but support is curre
 
 The `wayland-text-input-v3` flag can also be enabled in Chromium.
 
+If using `xdotool` and emojis do not paste correctly into specific applications (usually this seems to be, again, web browsers and electron applications),
+one approach may be to increase the `--delay` option for the tool:
+
+```sh
+BEMOJI_TYPE_CMD="xdotool type --delay 450" bemoji -t
+```
+
+Discussion for this can be found in issue [#36](https://github.com/marty-oehme/bemoji/issues/36),
+with a possible explanation in [this comment](https://github.com/jordansissel/xdotool/issues/154#issuecomment-2394993679) on the `xdotool` repository.
+
 ### Running tests
 
 This project makes use of [bash-bats](https://github.com/bats-core/bats-core) (community fork) to test some of its functionality.
