@@ -319,7 +319,7 @@ If you have an idea or improvement, don't hesitate to open a merge request!
 There is a known issue concerning some GUI application which do not receive the correct emojis
 when auto-typing and instead a bunch of empty unicode squares.
 It seems to be an issue with `wtype` and may need to be fixed upstream,
-but is not an issue with `wl-ime-type` if it works with the application.
+see issue [#31](https://github.com/atx/wtype/issues/31) on the `wtype` repository.
 
 A workaround for `wtype` seems to be to save the emoji to the clipboard
 and have a typing tool paste the contents of the clipboard directly,
@@ -330,9 +330,12 @@ bemoji -cn && echo key ctrl+v | dotool
 ```
 
 The issue is tracked at [#34](https://github.com/marty-oehme/bemoji/issues/34).
+If this is a problem for you, one possibility may be to use `wl-ime-type` as your typing tool instead,
+as it does not appear to suffer from the same issue.
 
 `wl-ime-type` only works with applications which support the Wayland `text-input-v3` protocol, including GTK3/4 and Qt5/6 applications.
-Some applications which should support `text-input-v3` do not currently work with `wl-ime-type`, including kitty and wezterm.
+Some applications which should support `text-input-v3` nevertheless do not currently work with `wl-ime-type`,
+including kitty and wezterm.
 
 Chromium and Electron applications support `text-input-v3`, but support is currently hidden behind command line flags:
 
