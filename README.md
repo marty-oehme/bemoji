@@ -333,7 +333,9 @@ The issue is tracked at [#34](https://github.com/marty-oehme/bemoji/issues/34).
 If this is a problem for you, one possibility may be to use `wl-ime-type` as your typing tool instead,
 as it does not appear to suffer from the same issue.
 
-`wl-ime-type` only works with applications which support the Wayland `text-input-v3` protocol, including GTK3/4 and Qt5/6 applications.
+---
+
+`wl-ime-type` only works with applications which support the wayland `text-input-v3` protocol, including GTK3/4 and Qt5/6 applications.
 Some applications which should support `text-input-v3` nevertheless do not currently work with `wl-ime-type`,
 including kitty and wezterm.
 
@@ -345,7 +347,9 @@ Chromium and Electron applications support `text-input-v3`, but support is curre
 
 The `wayland-text-input-v3` flag can also be enabled in Chromium.
 
-If using `xdotool` and emojis do not paste correctly into specific applications (usually this seems to be, again, web browsers and electron applications),
+---
+
+If you are using `xdotool` and emojis do not paste correctly into specific applications (usually this seems to be, again, web browsers and electron applications),
 one approach may be to increase the `--delay` option for the tool:
 
 ```sh
@@ -354,6 +358,19 @@ BEMOJI_TYPE_CMD="xdotool type --delay 450" bemoji -t
 
 Discussion for this can be found in issue [#36](https://github.com/marty-oehme/bemoji/issues/36),
 with a possible explanation in [this comment](https://github.com/jordansissel/xdotool/issues/154#issuecomment-2394993679) on the `xdotool` repository.
+
+---
+
+If you are running `bemoji` under X11 but also have all the wayland tools installed for whatever reason,
+the program will prefer those and in all likelihood produce a `failed to connect to wayland` error.
+
+If this is the case, you will have to force `bemoji` to use your preferred X11-supported tools, for example:
+
+```sh
+export BEMOJI_PICKER_CMD="dmenu"
+export BEMOJI_CLIP_CMD="xclip"
+export BEMOJI_TYPE_CMD="xdotool"
+```
 
 ### Running tests
 
