@@ -229,9 +229,37 @@ add_to_recent() {
 # Set default clipboard util
 _clipper() {
     if [ -n "$BEMOJI_CLIP_CMD" ]; then
-        # shellcheck disable=SC2068
-        ${BEMOJI_CLIP_CMD[@]}
-    elif [ -n "$WAYLAND_DISPLAY" ] && command -v wl-copy >/dev/null 2>&1; then
+        read -r -a cmd_array <<< "$BEMOJI_CLIP_CMD"
+        
+        if [ "${#cmd_array[@]}" -eq 1 ]; then
+            case "${cmd_array[0]}" in
+                wl-copy)
+                    if command -v wl-copy >/dev/null 2>&1; then
+                        wl-copy
+                        return
+                    fi
+                    ;;
+                xclip)
+                    if command -v xclip >/dev/null 2>&1; then
+                        xclip -selection clipboard
+                        return
+                    fi
+                    ;;
+                xsel)
+                    if command -v xsel >/dev/null 2>&1; then
+                        xsel -b
+                        return
+                    fi
+                    ;;
+            esac
+        else
+            # shellcheck disable=SC2068
+            ${BEMOJI_CLIP_CMD[@]}
+            return
+        fi
+    fi
+
+    if [ -n "$WAYLAND_DISPLAY" ] && command -v wl-copy >/dev/null 2>&1; then
         wl-copy
     elif [ -n "$DISPLAY" ] && command -v xclip >/dev/null 2>&1; then
         xclip -selection clipboard
@@ -249,9 +277,28 @@ _typer() {
     totype=$(cat -)
 
     if [ -n "$BEMOJI_TYPE_CMD" ]; then
-        # shellcheck disable=SC2068
-        ${BEMOJI_TYPE_CMD[@]} "$totype"
-        return
+        read -r -a cmd_array <<< "$BEMOJI_TYPE_CMD"
+        
+        if [ "${#cmd_array[@]}" -eq 1 ]; then
+            case "${cmd_array[0]}" in
+                wtype)
+                    if command -v wtype >/dev/null 2>&1; then
+                        wtype -s 30 "$totype"
+                        return
+                    fi
+                    ;;
+                xdotool)
+                    if command -v xdotool >/dev/null 2>&1; then
+                        xdotool type --delay 30 "$totype"
+                        return
+                    fi
+                    ;;
+            esac
+        else
+            # shellcheck disable=SC2068
+            ${BEMOJI_TYPE_CMD[@]} "$totype"
+            return
+        fi
     fi
 
     if [ -n "$WAYLAND_DISPLAY" ]; then
