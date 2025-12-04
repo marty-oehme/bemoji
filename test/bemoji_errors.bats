@@ -7,8 +7,11 @@ setup_file() {
 }
 
 setup() {
-    load 'test_helper/bats-support/load'
-    load 'test_helper/bats-assert/load'
+    export BATS_LIB_PATH="${BATS_LIB_PATH}:/usr/lib"
+    bats_load_library bats-support
+    bats_load_library bats-assert
+    bats_load_library bats-file
+    bats_load_library bats-detik/detik.bash
 
     # set up small default set of test emoji for each test
     export BEMOJI_DB_LOCATION="$BATS_TEST_TMPDIR/database"
