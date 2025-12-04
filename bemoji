@@ -289,7 +289,7 @@ _picker() {
 parse_cli "$@"
 
 [ -n "$BEMOJI_CUSTOM_LIST" ] || prepare_db
-result=$(gather_emojis | _picker)
+result=$(gather_emojis 2>/dev/null | _picker)
 exit_value="$?"
 [ "$bm_private_mode" = true ] || add_to_recent "$result"
 result=$(echo "$result" | grep -o '^\S\+' | tr -d '\n')
