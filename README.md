@@ -1,6 +1,6 @@
 # bemoji ❤️ - Quickly ⛏️ your 🌟
 
-[![status-badge](https://ci.martyoeh.me/api/badges/Marty/bemoji/status.svg)](https://ci.martyoeh.me/Marty/bemoji)
+[![.github/workflows/test.yaml](https://github.com/marty-oehme/bemoji/actions/workflows/test.yaml/badge.svg)](https://github.com/marty-oehme/bemoji/actions/workflows/test.yaml)
 
 ![bemoji picker interface on bemenu](assets/bemenu.png)
 
