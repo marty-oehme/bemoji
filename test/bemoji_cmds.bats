@@ -7,17 +7,18 @@ setup_file() {
 }
 
 setup() {
-    load 'test_helper/bats-support/load'
-    load 'test_helper/bats-assert/load'
-
-    # mock out interactive picker for static emoji return
-    export BEMOJI_PICKER_CMD="echo ❤️"
+    export BATS_LIB_PATH="${BATS_LIB_PATH}:/usr/lib"
+    bats_load_library bats-support
+    bats_load_library bats-assert
 
     # set up small default set of test emoji for each test
     export BEMOJI_DB_LOCATION="$BATS_TEST_TMPDIR/database"
     export BEMOJI_HISTORY_LOCATION="$BATS_TEST_TMPDIR/history"
     mkdir -p "$BEMOJI_DB_LOCATION" "$BEMOJI_HISTORY_LOCATION"
     cat "$BATS_TEST_DIRNAME/resources/test_emoji.txt" > "$BEMOJI_DB_LOCATION/emoji.txt"
+
+    # mock out interactive picker for static emoji return
+    export BEMOJI_PICKER_CMD="echo ❤️"
 }
 
 @test "-v prints correct version number" {

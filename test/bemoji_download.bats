@@ -7,9 +7,10 @@ setup_file() {
 }
 
 setup() {
-    load 'test_helper/bats-support/load'
-    load 'test_helper/bats-assert/load'
-    load 'test_helper/mocks/stub'
+    export BATS_LIB_PATH="${BATS_LIB_PATH}:${PWD}/vendor/:/usr/lib"
+    bats_load_library bats-support
+    bats_load_library bats-assert
+    bats_load_library bats-mock/stub.bash
 
     # mock out interactive picker for static emoji return
     export BEMOJI_PICKER_CMD="echo heart"
