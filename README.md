@@ -88,6 +88,12 @@ super + Shift + e
     bemoji -t
 ```
 
+For `niri`, put the following into your `binds` section in `~/.config/niri/config.kdl`:
+
+```
+Mod+Shift+E { spawn-sh "bemoji -t"; }
+```
+
 And you can easily type any emoji with the help of `Super+Shift+E`.
 
 ## 🧰 Options
