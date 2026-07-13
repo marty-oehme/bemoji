@@ -138,21 +138,18 @@ prepare_db() {
         if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'none'; then
             msg "Not downloading a default emoji list."
             return
-        elif echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'all'; then
+        fi
+        if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'all'; then
+            BEMOJI_DOWNLOAD_LIST="emoji,math,nerd"
+        fi
+        if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'emoji'; then
             dl_default_emoji
+        fi
+        if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'math'; then
             dl_math_symbols
+        fi
+        if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'nerd'; then
             dl_nerd_symbols
-            return
-        else
-            if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'emoji'; then
-                dl_default_emoji
-            fi
-            if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'math'; then
-                dl_math_symbols
-            fi
-            if echo "$BEMOJI_DOWNLOAD_LIST" | grep -q -e 'nerd'; then
-                dl_nerd_symbols
-            fi
         fi
     fi
     if [ -n "$(find "$bm_db_location" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then
