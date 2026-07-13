@@ -4,6 +4,10 @@ setup() {
     load 'common_setup'
     _common_setup
 
+    # Use a writable temp directory for bats-mock stubs
+    export BATS_TMPDIR="$BATS_TEST_TMPDIR/stub_tmp"
+    mkdir -p "$BATS_TMPDIR"
+
     # additionally need mock library to stub downloading
     bats_load_library bats-mock/stub.bash
 }
