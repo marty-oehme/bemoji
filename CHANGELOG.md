@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Correct padding for fuzzel picker prompt
 - Custom picker commands being correctly evaluated
 - Pass through of emojis to custom type commands
+- Correctly show error if database has no list files
 
 <!-- ### Security -->
 

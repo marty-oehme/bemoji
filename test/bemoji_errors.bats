@@ -29,3 +29,14 @@ setup() {
     output="$stderr"
     assert_output "No suitable typing tool found."
 }
+
+@test "Empty db directory produces error" {
+    # Create empty db directory with no .txt files
+    empty_db="$BATS_TEST_TMPDIR/empty_db"
+    mkdir -p "$empty_db"
+    # Set invalid custom list to skip prepare_db download
+    BEMOJI_DB_LOCATION="$empty_db" BEMOJI_CUSTOM_LIST="invalid" run --separate-stderr bemoji 3>&-
+    [ "$status" -ne 0 ]
+    output="$stderr"
+    assert_output "No emoji database files found in $empty_db"
+}

@@ -195,6 +195,10 @@ gather_emojis() {
     elif [ -n "$BEMOJI_CUSTOM_LIST" ] && curl -fsSI "$BEMOJI_CUSTOM_LIST" >/dev/null 2>&1; then
         result=$(curl -sSL "$BEMOJI_CUSTOM_LIST")
     else
+        if ! ls "$bm_db_location"/*.txt 1>/dev/null 2>&1; then
+            msg "No emoji database files found in $bm_db_location"
+            exit 1
+        fi
         result=$(cat "$bm_db_location"/*.txt)
     fi
 
