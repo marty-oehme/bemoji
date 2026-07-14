@@ -265,6 +265,20 @@ Arguments after the `=` sign are passed to the filter as command-line arguments.
 Filters run at **gather-time**, i.e. every time bemoji is invoked.
 Changes to filters or their arguments take effect immediately, no cache to clear.
 
+#### Default filters
+
+bemoji comes with a default filter in the `filters/` directory.
+
+**skintone** to filter emoji by skin tone modifier:
+
+```sh
+bemoji --filter skintone=medium-light
+```
+
+Valid options: `light`, `medium-light`, `medium`, `medium-dark`, `dark`.
+Keeps emoji matching the given skin tone, removes other skin tone variants.
+Emoji without skin tone modifiers pass through unchanged.
+
 #### Writing a custom filter
 
 A filter is any executable script that reads stdin and writes stdout.

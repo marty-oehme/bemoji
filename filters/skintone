@@ -1,0 +1,18 @@
+#!/bin/sh
+# Filter emoji by skin tone modifier
+# Usage: skintone <light|medium-light|medium|medium-dark|dark>
+# Keeps emoji matching given skin tone, removes other skin tone variants.
+# Emoji without skin tone modifiers pass through unchanged.
+
+case "$1" in
+    light|medium-light|medium|medium-dark|dark) ;;
+    *)
+        echo "Usage: skintone <light|medium-light|medium|medium-dark|dark>" >&2
+        exit 1
+        ;;
+esac
+
+awk -v tone=" $1 skin tone" '
+    / skin tone/ && index($0, tone) == 0 { next }
+    { print }
+'
