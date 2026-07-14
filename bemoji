@@ -3,6 +3,8 @@
 bm_version=0.4.0
 # Emoji default database location
 bm_db_location=${BEMOJI_DB_LOCATION:-"${XDG_DATA_HOME:-$HOME/.local/share}/bemoji"}
+# Default filter location is under database
+bm_filters_location=${BEMOJI_FILTERS_LOCATION:-$bm_db_location/filters}
 # Setting custom emoji list file location:
 # BEMOJI_CUSTOM_LIST=/my/location/emojis.txt
 # Setting custom recent emoji history:
@@ -57,7 +59,7 @@ usage() {
 }
 
 version() {
-    printf "v%s\ndatabase=%s\nfilters=%s\nhistory=%s\n" "$bm_version" "$bm_db_location" "$bm_db_location/filters" "$bm_history_file" 
+    printf "v%s\ndatabase=%s\nfilters=%s\nhistory=%s\n" "$bm_version" "$bm_db_location" "$bm_filters_location" "$bm_history_file"
     exit
 }
 
@@ -202,7 +204,7 @@ gather_emojis() {
         if [ "$filter_args" = "$BEMOJI_FILTER" ]; then
             filter_args=""
         fi
-        local filter_script="$bm_db_location/filters/$filter_name"
+        local filter_script="$bm_filters_location/$filter_name"
 
         if [ ! -x "$filter_script" ]; then
             msg "Filter not found or not executable: $filter_script"
