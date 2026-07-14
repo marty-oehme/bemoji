@@ -31,6 +31,7 @@ declare -A default_pickers=(
     ["ilia"]="ilia -n -p textlist -l 'Emoji' -i desktop-magnifier"
     ["fuzzel"]="fuzzel -d -p '🔍 '"
 )
+picker_order=(bemenu wofi rofi dmenu wmenu ilia fuzzel)
 
 # Report usage
 usage() {
@@ -307,7 +308,7 @@ _picker() {
         return
     fi
 
-    for tool in "${!default_pickers[@]}"; do
+    for tool in "${picker_order[@]}"; do
         if command -v "$tool" >/dev/null 2>&1; then
             eval "${default_pickers[$tool]}"
             return
