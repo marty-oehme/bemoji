@@ -11,14 +11,14 @@ setup() {
 @test "filter not found produces error" {
     BEMOJI_PICKER_CMD="cat -" run --separate-stderr bemoji -ne -F nonexistent 3>&-
     assert_failure
-    assert_stderr --partial "not found"
+    [[ "$stderr" == *"not found"* ]]
 }
 
 @test "filter not executable produces error" {
     printf '#!/bin/sh\ncat\n' > "$BEMOJI_DB_LOCATION/filters/myfilter"
     BEMOJI_PICKER_CMD="cat -" run --separate-stderr bemoji -ne -F myfilter 3>&-
     assert_failure
-    assert_stderr --partial "not executable"
+    [[ "$stderr" == *"not executable"* ]]
 }
 
 @test "filter execution failure produces error" {
@@ -26,7 +26,7 @@ setup() {
     chmod +x "$BEMOJI_DB_LOCATION/filters/failfilter"
     BEMOJI_PICKER_CMD="cat -" run --separate-stderr bemoji -ne -F failfilter 3>&-
     assert_failure
-    assert_stderr --partial "failed"
+    [[ "$stderr" == *"failed"* ]]
 }
 
 @test "filter with valid args produces filtered output" {
