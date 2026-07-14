@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-
+# bemoji - pick emoji with your favorite picker tool
+#
+# Exit codes: 0=success, 1=runtime error, 2=usage error
+#
+# Current program version
 bm_version=0.4.0
 # Emoji default database location
 bm_db_location=${BEMOJI_DB_LOCATION:-"${XDG_DATA_HOME:-$HOME/.local/share}/bemoji"}
@@ -115,8 +119,8 @@ parse_cli() {
             version) version ;;
             '') break ;;
             *)
-                echo "Unknown option: ${OPTARG}" 1>&2
-                usage 1
+                msg "Unknown option: ${OPTARG}"
+                usage 2
                 ;;
             esac
             ;;
