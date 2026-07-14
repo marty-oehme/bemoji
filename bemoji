@@ -215,7 +215,9 @@ gather_emojis() {
             exit 1
         fi
 
-        if ! result=$(printf "%s" "$result" | "$filter_script" "$filter_args"); then
+        local filter_cmd=("$filter_script")
+        [ -n "$filter_args" ] && filter_cmd+=("$filter_args")
+        if ! result=$(printf "%s" "$result" | "${filter_cmd[@]}"); then
             msg "Filter failed: $filter_script"
             exit 1
         fi

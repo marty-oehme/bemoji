@@ -15,10 +15,10 @@ if [ $# -eq 0 ]; then
 fi
 
 # Handle both: word "heart face" (single arg with spaces) and word heart face (multiple args)
-# If single arg contains spaces, split it
+# If single arg contains spaces, split it into multiple args
 if [ $# -eq 1 ] && echo "$1" | grep -q ' '; then
   # shellcheck disable=2086
-  set -- "$1"
+  set -- $1
 fi
 
 # Build grep pattern: exclude lines matching any word

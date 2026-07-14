@@ -37,14 +37,14 @@ setup() {
     refute_output --partial "😀"
 }
 
-@test "filter with no args receives empty arg" {
+@test "filter with no args receives no args" {
     local args_file="$BATS_TEST_TMPDIR/filter_args.txt"
-    printf '#!/bin/sh\necho "$1" > "%s"\ncat\n' "$args_file" > "$BEMOJI_DB_LOCATION/filters/argtest"
+    printf '#!/bin/sh\necho "$#" > "%s"\ncat\n' "$args_file" > "$BEMOJI_DB_LOCATION/filters/argtest"
     chmod +x "$BEMOJI_DB_LOCATION/filters/argtest"
     BEMOJI_PICKER_CMD="cat -" run bemoji -e -F argtest 3>&-
     assert_output --partial "❤️"
-    args_content=$(cat "$args_file")
-    [ -z "$args_content" ]
+    num_of_args=$(cat "$args_file")
+    [ "$num_of_args" = "0" ]
 }
 
 @test "no filter specified works normally" {
