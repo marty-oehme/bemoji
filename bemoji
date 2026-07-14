@@ -49,6 +49,7 @@ usage() {
     echo "  -D, --download <choice>    Choose from default lists to download."
     echo "                             Valid choices: all|none|emoji|math|nerd (multiple choices possible)."
     echo "  -f, --file <filepath>      Use a custom emoji database. Can be a url which will be retrieved."
+    echo "  -F, --filter <name=args>   Apply filter from filters directory before displaying emoji list."
     echo "  -v, --version              Display current program version and directory configuration."
     echo "  -h, --help                 Show this help."
     echo
@@ -56,7 +57,7 @@ usage() {
 }
 
 version() {
-    printf "v%s\ndatabase=%s\nhistory=%s\n" "$bm_version" "$bm_db_location" "$bm_history_file"
+    printf "v%s\ndatabase=%s\nfilters=%s\nhistory=%s\n" "$bm_version" "$bm_db_location" "$bm_db_location/filters" "$bm_history_file" 
     exit
 }
 
@@ -66,12 +67,13 @@ msg() {
 }
 
 parse_cli() {
-    while getopts cD:ef:hnpP:tv-: arg "$@"; do
+    while getopts cD:eF:f:hnpP:tv-: arg "$@"; do
         case "$arg" in
         c) bm_cmds+=(_clipper) ;;
         D) _opt_set_download_list "${OPTARG}" ;;
         e) bm_cmds+=(cat) ;;
         f) _opt_set_custom_list "${OPTARG}" ;;
+        F) _opt_set_filter "${OPTARG}" ;;
         h) usage 0 ;;
         n) bm_echo_newline=false ;;
         p) bm_private_mode=true ;;
@@ -91,6 +93,11 @@ parse_cli() {
             file=?*) _opt_set_custom_list "${LONG_OPTARG}" ;;
             file*)
                 _opt_set_custom_list "${*:$OPTIND:1}"
+                OPTIND=$((OPTIND + 1))
+                ;;
+            filter=?*) _opt_set_filter "${LONG_OPTARG}" ;;
+            filter*)
+                _opt_set_filter "${*:$OPTIND:1}"
                 OPTIND=$((OPTIND + 1))
                 ;;
             help) usage 0 ;;
@@ -125,6 +132,9 @@ _opt_set_download_list() {
 }
 _opt_set_hist_limit() {
     bm_limit_recent="$1"
+}
+_opt_set_filter() {
+    BEMOJI_FILTER="$1"
 }
 
 prepare_db() {
@@ -184,6 +194,25 @@ gather_emojis() {
         result=$(curl -sSL "$BEMOJI_CUSTOM_LIST")
     else
         result=$(cat "$bm_db_location"/*.txt)
+    fi
+
+    if [ -n "$BEMOJI_FILTER" ]; then
+        local filter_name="${BEMOJI_FILTER%%=*}"
+        local filter_args="${BEMOJI_FILTER#*=}"
+        if [ "$filter_args" = "$BEMOJI_FILTER" ]; then
+            filter_args=""
+        fi
+        local filter_script="$bm_db_location/filters/$filter_name"
+
+        if [ ! -x "$filter_script" ]; then
+            msg "Filter not found or not executable: $filter_script"
+            exit 1
+        fi
+
+        if ! result=$(printf "%s" "$result" | "$filter_script" "$filter_args"); then
+            msg "Filter failed: $filter_script"
+            exit 1
+        fi
     fi
 
     if [ -n "$bm_limit_recent" ] && [ "$bm_limit_recent" -eq 0 ]; then
