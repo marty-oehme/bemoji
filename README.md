@@ -250,6 +250,43 @@ BEMOJI_PICKER_CMD="fuzzel -d" bemoji
 This is somewhat experimental still and you'll have to see how well it works for you.
 The setting can not be changed through the commandline alone.
 
+### Filtering displayed emoji
+
+You can apply a filter to the emoji list every time bemoji runs, using the `-F` or `--filter` option:
+
+```sh
+bemoji --filter skintone=medium
+```
+
+This looks for an executable filter script named `skintone` in the filters directory (by default `$BEMOJI_DB_LOCATION/filters/`, i.e. `~/.local/share/bemoji/filters/`).
+The filter receives the full emoji list on stdin and must write the filtered list to stdout.
+Arguments after the `=` sign are passed to the filter as command-line arguments.
+
+Filters run at **gather-time**, i.e. every time bemoji is invoked.
+Changes to filters or their arguments take effect immediately, no cache to clear.
+
+#### Writing a custom filter
+
+A filter is any executable script that reads stdin and writes stdout.
+For example, to exclude all flag emoji:
+
+```sh
+mkdir -p ~/.local/share/bemoji/filters
+cat > ~/.local/share/bemoji/filters/no-flags <<'EOF'
+#!/bin/sh
+grep -v "flag:"
+EOF
+chmod +x ~/.local/share/bemoji/filters/no-flags
+```
+
+Then use it:
+
+```sh
+bemoji --filter no-flags
+```
+
+The filter directory can be changed with the `BEMOJI_FILTERS_LOCATION` environment variable.
+
 ### Execute a custom command with my emoji
 
 You can execute bemoji with the `-e` flag with which you tell it not to do anything but echo out the chosen emoji.
@@ -277,7 +314,9 @@ with their default settings
 | limit history items               | -P,--hist-limit    | BEMOJI_LIMIT_RECENT         |                       |
 | download specific emoji lists     | -D,--download      | BEMOJI_DOWNLOAD_LIST        |                       |
 | read emoji from file              | -f,--file          | BEMOJI_CUSTOM_LIST          |                       |
+| apply filter to emoji list        | -F,--filter        | BEMOJI_FILTER               |                       |
 | emoji lists directory             |                    | BEMOJI_DB_LOCATION          | $XDG_DATA_HOME/bemoji |
+| filters directory                 |                    | BEMOJI_FILTERS_LOCATION     | $BEMOJI_DB_LOCATION/filters |
 | emoji history directory           |                    | BEMOJI_HISTORY_LOCATION     | $XDG_STATE_HOME       |
 | custom default command            |                    | BEMOJI_DEFAULT_CMD          |                       |
 | custom type command               |                    | BEMOJI_TYPE_CMD             |                       |
@@ -288,8 +327,10 @@ The environment variables have the following effects:
 
 ```sh
 BEMOJI_DB_LOCATION="$XDG_DATA_HOME/bemoji" # where the emoji lists reside
+BEMOJI_FILTERS_LOCATION="$BEMOJI_DB_LOCATION/filters" # where filter scripts reside
 BEMOJI_HISTORY_LOCATION="$XDG_STATE_HOME" # where the state file resides
 BEMOJI_CUSTOM_LIST="" # the custom emoji list to display
+BEMOJI_FILTER="" # the filter to apply to emoji list
 BEMOJI_DOWNLOAD_LIST="" # the default emoji lists to download to database
 BEMOJI_DEFAULT_COMMAND="" # which command to invoke by default
 BEMOJI_PICKER_CMD="bemenu" # which picker tool to use
