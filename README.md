@@ -65,32 +65,32 @@ You can also map the picker to a key combination for quick access, e.g.
 
 In `swaywm`, put the following in `~/.config/sway/config`:
 
-```
+```conf
 bindsym Mod4+Shift+e exec bemoji -t
 ```
 
 For `i3`, put the same into `~/.config/i3/config`:
 
-```
+```conf
 bindsym Mod4+Shift+e exec bemoji -t
 ```
 
 For `riverwm`, put the following in `~/.config/river/init`:
 
-```
+```conf
 riverctl map normal Mod4+Shift E spawn "bemoji -t"
 ```
 
 In `sxhkd`, put the following into `~/.config/sxhkd/sxhkdrc`:
 
-```
+```text
 super + Shift + e
     bemoji -t
 ```
 
 For `niri`, put the following into your `binds` section in `~/.config/niri/config.kdl`:
 
-```
+```kdl
 Mod+Shift+E { spawn-sh "bemoji -t"; }
 ```
 
@@ -110,7 +110,7 @@ most likely this is `~/.local/share/bemoji`.
 
 Add any number of `.txt` files containing additional emoji to this directory:
 
-```
+```text
 🫦 Biting lip
 🫶 Heart Hands
 ```
@@ -321,21 +321,21 @@ This is just an example to show how the echo mode works.
 What follows is a list of all environment variables bemoji understands,
 with their default settings
 
-| Description                       | Commandline option |     env                     | default               |
-| ---                               | ---                | ---                         | ---                   |
-| enable/disable newline            | -n, --noline       | BEMOJI_ECHO_NEWLINE         | true                  |
-| enable private mode               | -p,--private       | BEMOJI_PRIVATE_MODE         | false                 |
-| limit history items               | -P,--hist-limit    | BEMOJI_LIMIT_RECENT         |                       |
-| download specific emoji lists     | -D,--download      | BEMOJI_DOWNLOAD_LIST        |                       |
-| read emoji from file              | -f,--file          | BEMOJI_CUSTOM_LIST          |                       |
-| apply filter to emoji list        | -F,--filter        | BEMOJI_FILTER               |                       |
-| emoji lists directory             |                    | BEMOJI_DB_LOCATION          | $XDG_DATA_HOME/bemoji |
-| filters directory                 |                    | BEMOJI_FILTERS_LOCATION     | $BEMOJI_DB_LOCATION/filters |
-| emoji history directory           |                    | BEMOJI_HISTORY_LOCATION     | $XDG_STATE_HOME       |
-| custom default command            |                    | BEMOJI_DEFAULT_CMD          |                       |
-| custom type command               |                    | BEMOJI_TYPE_CMD             |                       |
-| custom pick command               |                    | BEMOJI_PICKER_CMD           |                       |
-| custom clip command               |                    | BEMOJI_CLIP_CMD             |                       |
+| Description                   | Commandline option | env                     | default                     |
+| ---                           | ---                | ---                     | ---                         |
+| enable/disable newline        | -n, --noline       | BEMOJI_ECHO_NEWLINE     | true                        |
+| enable private mode           | -p,--private       | BEMOJI_PRIVATE_MODE     | false                       |
+| limit history items           | -P,--hist-limit    | BEMOJI_LIMIT_RECENT     |                             |
+| download specific emoji lists | -D,--download      | BEMOJI_DOWNLOAD_LIST    |                             |
+| read emoji from file          | -f,--file          | BEMOJI_CUSTOM_LIST      |                             |
+| apply filter to emoji list    | -F,--filter        | BEMOJI_FILTER           |                             |
+| emoji lists directory         |                    | BEMOJI_DB_LOCATION      | $XDG_DATA_HOME/bemoji       |
+| filters directory             |                    | BEMOJI_FILTERS_LOCATION | $BEMOJI_DB_LOCATION/filters |
+| emoji history directory       |                    | BEMOJI_HISTORY_LOCATION | $XDG_STATE_HOME             |
+| custom default command        |                    | BEMOJI_DEFAULT_CMD      |                             |
+| custom type command           |                    | BEMOJI_TYPE_CMD         |                             |
+| custom pick command           |                    | BEMOJI_PICKER_CMD       |                             |
+| custom clip command           |                    | BEMOJI_CLIP_CMD         |                             |
 
 The environment variables have the following effects:
 
