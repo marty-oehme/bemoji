@@ -24,21 +24,23 @@ see Options below.
 
 ### Manual
 
-Option 1. Clone the repository and put the executable somewhere in your path:
+Option 1. Clone the repository and put the executable somewhere in your path, and the filters in your home data:
 
 ```sh
 git clone <INSERT-REPOSITORY>
 chmod +x bemoji/bemoji
 mv bemoji/bemoji /usr/local/bin/bemoji
+mkdir -p ~/.local/share/bemoji && mv bemoji/filters ~/.local/share/bemoji/filters
 rm -r bemoji
 ```
 
-Option 2. Clone the repository and link the executable to your path:
+Option 2. Clone the repository and link the executable to your path, and the filters to your home data:
 
 ```sh
 git clone <INSERT-REPOSITORY>
 chmod +x bemoji/bemoji
-ln -s bemoji/bemoji /usr/local/bin/bemoji
+ln -s </path/to/>bemoji/bemoji /usr/local/bin/bemoji
+ln -s </path/to/>bemoji/filters ~/.local/share/bemoji/filters
 ```
 
 ### Arch Linux
