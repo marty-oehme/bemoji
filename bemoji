@@ -159,7 +159,7 @@ prepare_db() {
 
 dl_default_emoji() {
     local emojis
-    emojis=$(curl -sSL "https://unicode.org/Public/emoji/16.0/emoji-test.txt")
+    emojis=$(curl -sSL "https://www.unicode.org/Public/17.0.0/emoji/emoji-test.txt")
     printf "%s" "$emojis" | sed -ne 's/^.*; fully-qualified.*# \(\S*\) \S* \(.*$\)/\1 \2/gp' >"$bm_db_location/emojis.txt"
     msg "Downloaded default emoji set."
 }

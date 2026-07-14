@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Support for wmenu picker by default
 - Support for wl-ime-type wayland typing tool
+- Download Unicode 17.0 emoji list by default
 
 <!-- ### Changed -->
 
