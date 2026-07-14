@@ -1,0 +1,26 @@
+#!/bin/sh
+# Filter out emoji containing specified words
+# Usage: word <word1> [word2] [word3] ...
+# Removes any emoji line containing the given words.
+#
+# This is a sample filter demonstrating the filter interface:
+# - Reads emoji list from stdin
+# - Writes filtered list to stdout
+# - Accepts arguments as CLI parameters
+# - Runs at gather-time (every bemoji invocation)
+
+if [ $# -eq 0 ]; then
+  echo "Usage: word <word1> [word2] ..." >&2
+  exit 1
+fi
+
+# Handle both: word "heart face" (single arg with spaces) and word heart face (multiple args)
+# If single arg contains spaces, split it
+if [ $# -eq 1 ] && echo "$1" | grep -q ' '; then
+  # shellcheck disable=2086
+  set -- "$1"
+fi
+
+# Build grep pattern: exclude lines matching any word
+# grep -v returns 1 if no lines match, but that's not an error for us
+grep -vE "$(printf '%s|' "$@" | sed 's/|$//')" || true

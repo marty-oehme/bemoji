@@ -279,6 +279,15 @@ Valid options: `light`, `medium-light`, `medium`, `medium-dark`, `dark`.
 Keeps emoji matching the given skin tone, removes other skin tone variants.
 Emoji without skin tone modifiers pass through unchanged.
 
+**word** to remove emoji containing specified words:
+
+```sh
+bemoji --filter "word=flag"
+bemoji --filter "word=flag face"
+```
+
+Accepts one or more words as arguments. Removes any emoji line containing any of the given words.
+
 #### Writing a custom filter
 
 A filter is any executable script that reads stdin and writes stdout.
@@ -300,6 +309,7 @@ bemoji --filter no-flags
 ```
 
 The filter directory can be changed with the `BEMOJI_FILTERS_LOCATION` environment variable.
+Take a look at the default `word` filter for a simple example implementation using arguments.
 
 ### Execute a custom command with my emoji
 
