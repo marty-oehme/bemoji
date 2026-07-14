@@ -263,8 +263,7 @@ add_to_recent() {
 # Set default clipboard util
 _clipper() {
     if [ -n "$BEMOJI_CLIP_CMD" ]; then
-        # shellcheck disable=SC2068
-        ${BEMOJI_CLIP_CMD[@]}
+        eval "$BEMOJI_CLIP_CMD"
     elif [ -n "$WAYLAND_DISPLAY" ] && command -v wl-copy >/dev/null 2>&1; then
         wl-copy
     elif [ -n "$DISPLAY" ] && command -v xclip >/dev/null 2>&1; then
@@ -283,8 +282,7 @@ _typer() {
     totype=$(cat -)
 
     if [ -n "$BEMOJI_TYPE_CMD" ]; then
-        # shellcheck disable=SC2068
-        ${BEMOJI_TYPE_CMD[@]} "$totype"
+        eval "$BEMOJI_TYPE_CMD \"\$totype\""
         return
     fi
 
@@ -305,7 +303,7 @@ _typer() {
 # Set default picker util
 _picker() {
     if [ -n "$BEMOJI_PICKER_CMD" ]; then
-        eval "${BEMOJI_PICKER_CMD[*]}"
+        eval "$BEMOJI_PICKER_CMD"
         return
     fi
 
@@ -344,8 +342,7 @@ case "$exit_value" in
 0)
     if [ ${#bm_cmds[@]} -eq 0 ]; then
         if [ -n "$bm_default_cmd" ]; then
-            # shellcheck disable=SC2068
-            printout "$result" | ${bm_default_cmd[@]}
+            printout "$result" | eval "$bm_default_cmd"
             exit
         fi
         bm_cmds+=(_clipper)
