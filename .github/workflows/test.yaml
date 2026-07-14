@@ -15,6 +15,8 @@ jobs:
       - name: Setup Bats and bats libs
         id: setup-bats
         uses: bats-core/bats-action@4.0.0
+      - name: Lint with shellcheck
+        run: shellcheck bemoji filters/*
       - name: Test commit
         shell: bash
         env:
